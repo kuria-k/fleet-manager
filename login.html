@@ -13,12 +13,17 @@
       border-color: black;
       margin: auto;
       border: 2px;
+      position: relative;
+      width: 30vw;
+      padding: 40px;
+      border-radius: 20px;
+      border: 1px solid gray;
+      box-shadow: 0 25px 45px rgb(5, 5, 115);
+      z-index: 10;
     }
     h1 {
       text-align: center;
-      font: bolder;
-      color: white;
-      background-color: blue;
+      color: blue;
       border-radius: 1vw;
       padding: 1vw;
       width: 20%;
@@ -92,8 +97,7 @@
     </div>
   </header>
   <body>
-    <br /><br /><br /><br />
-    <h1 class="text-center ml-auto mr-auto">LOG IN</h1>
+    <h1 class="text-center ml-auto mr-auto font-bold text-3xl">LOG IN</h1>
     <br /><br />
     <div class="myform">
       <form id="mylogs" class="max-w-sm mx-auto">
@@ -220,10 +224,17 @@
       const password = passwordInput.value.trim();
       const remember = rememberInput.value.trim();
 
+      const minLength = 6;
+      if (password.length < minLength) {
+          alert("Password must be at least " + minLength + " characters long.");
+          return;
+        }
+
       if (!name || !password) {
         alert("Fill in the spaces to gain access");
         return;
       }
+
 
       window.location.href = "manager.html";
     });

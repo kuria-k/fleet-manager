@@ -12,8 +12,18 @@
       background-color: rgb(247, 247, 247);
     }
     .myform {
-      background-color: gray;
-      border-color: solid black;
+      text-align: center;
+      display: block;
+      border-color: black;
+      margin: auto;
+      border: 2px;
+      position: relative;
+      width: 30vw;
+      padding: 40px;
+      border-radius: 20px;
+      border: 1px solid gray;
+      box-shadow: 0 25px 45px rgb(5, 5, 115);
+      z-index: 10;
     }
   </style>
   <header class="text-gray-600 body-font">
@@ -78,9 +88,9 @@
     </div>
   </header>
   <body>
-    <section class="text-gray-600 body-font relative" class="myform">
+    <section class="text-gray-600 body-font relative">
       <div
-        class="container px-5 py-16 mx-auto border border-gray-900 border-b-2 bg-gray-200"
+        class="container px-5 py-16 mx-auto" class="myform"
       >
         <div class="flex flex-col text-center w-full mb-12">
           <h1

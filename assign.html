@@ -80,15 +80,33 @@
       background-color: rgb(0, 0, 182);
       color: white;
       padding: 0.1em;
-      border-radius: 0%;
       width: 50%;
+      text-align: center;
+      display: block;
+      border-color: black;
+      margin: auto;
+      border: 2px;
+      position: relative;
+      border-radius: 20px;
+      border: 1px solid gray;
+      box-shadow: 0 25px 45px rgb(5, 5, 115);
+      z-index: 10;
     }
     .noo {
       background-color: rgb(0, 0, 182);
       color: white;
       padding: 0.1em;
-      border-radius: 0%;
       width: 50%;
+      text-align: center;
+      display: block;
+      border-color: black;
+      margin: auto;
+      border: 2px;
+      position: relative;
+      border-radius: 20px;
+      border: 1px solid gray;
+      box-shadow: 0 25px 45px rgb(5, 5, 115);
+      z-index: 10;
     }
   </style>
 
@@ -131,7 +149,7 @@
                   class="w-10 h-10 p-none rounded-full"
                 />
               </div>
-              <span class="ml-3 text-xl"
+              <span class="ml-3 text-xl text-gray-100"
                 >Fleet
                 <span class="text-blue-800 font-bold text-2xl"
                   >Pulse</span
@@ -182,7 +200,7 @@
     </nav>
     <div id="confirm" class="sign">
       <p>Are you sure you want to sign out?</p>
-      <button id="yesBtn" class="yess">Yes</button><br /><br />
+      <button id="yesBtn" class="yess">Yes</button><br />
       <button id="noBtn" class="noo">No</button>
     </div>
 
@@ -371,9 +389,9 @@
           >
             <tr>
               <th scope="col" class="px-6 py-3">Branch from</th>
-              <th scope="col" class="px-6 py-3">time of dispatch</th>
-              <th scope="col" class="px-6 py-3">location</th>
-              <th scope="col" class="px-6 py-3">Rider</th>
+              <th scope="col" class="px-6 py-3 text-center">time of dispatch</th>
+              <th scope="col" class="px-6 py-3 text-center">location</th>
+              <th scope="col" class="px-6 py-3 text-center">Rider</th>
               <th scope="col" class="px-6 py-3">clients number</th>
             </tr>
           </thead>
@@ -451,17 +469,17 @@
 
       const timeCell = document.createElement("td");
       timeCell.textContent = time;
-      timeCell.className = "text-gray-900 font-bold text-lg";
+      timeCell.className = "text-gray-900 font-bold text-lg text-center";
       row.appendChild(timeCell);
 
       const toCell = document.createElement("td");
       toCell.textContent = to;
-      toCell.className = "text-gray-900 font-bold text-lg";
+      toCell.className = "text-gray-900 font-bold text-lg text-center";
       row.appendChild(toCell);
 
       const riderCell = document.createElement("td");
       riderCell.textContent = rider;
-      riderCell.className = "text-gray-900 font-bold text-lg";
+      riderCell.className = "text-gray-900 font-bold text-lg text-center";
       row.appendChild(riderCell);
 
       // const rnumberCell = document.createElement("td");
@@ -487,7 +505,7 @@
 
       tableBody.appendChild(row);
 
-      form.reset();
+      form.reset()
     });
   </script>
 </html>

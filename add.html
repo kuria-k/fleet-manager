@@ -137,15 +137,33 @@
       background-color: rgb(0, 0, 182);
       color: white;
       padding: 0.1em;
-      border-radius: 0%;
       width: 50%;
+      text-align: center;
+      display: block;
+      border-color: black;
+      margin: auto;
+      border: 2px;
+      position: relative;
+      border-radius: 20px;
+      border: 1px solid gray;
+      box-shadow: 0 25px 45px rgb(5, 5, 115);
+      z-index: 10;
     }
     .noo {
       background-color: rgb(0, 0, 182);
       color: white;
       padding: 0.1em;
-      border-radius: 0%;
       width: 50%;
+      text-align: center;
+      display: block;
+      border-color: black;
+      margin: auto;
+      border: 2px;
+      position: relative;
+      border-radius: 20px;
+      border: 1px solid gray;
+      box-shadow: 0 25px 45px rgb(5, 5, 115);
+      z-index: 10;
     }
   </style>
 
@@ -188,7 +206,7 @@
                   class="w-10 h-10 p-none rounded-full"
                 />
               </div>
-              <span class="ml-3 text-xl"
+              <span class="ml-3 text-xl text-gray-100"
                 >Fleet
                 <span class="text-blue-800 font-bold text-2xl"
                   >Pulse</span
@@ -239,7 +257,7 @@
     </nav>
     <div id="confirm" class="sign">
       <p>Are you sure you want to sign out?</p>
-      <button id="yesBtn" class="yess">Yes</button><br /><br />
+      <button id="yesBtn" class="yess">Yes</button><br />
       <button id="noBtn" class="noo">No</button>
     </div>
 
@@ -399,18 +417,18 @@
         <br />
         <div class="tables">
           <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <table class="text-sm text-gray-500 dark:text-gray-400">
+            <table class="text-sm text-gray-500 dark:text-gray-400 border">
               <thead
                 class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
               >
                 <tr>
                   <th scope="col" class="px-6 py-3">Name</th>
-                  <th scope="col" class="px-6 py-3">Phone number</th>
-                  <th scope="col" class="px-6 py-3">Date</th>
-                  <th scope="col" class="px-6 py-3">Branch</th>
+                  <th scope="col" class="px-6 py-3 text-center">Phone number</th>
+                  <th scope="col" class="px-6 py-3 text-center">Date</th>
+                  <th scope="col" class="px-6 py-3 text-right">Branch</th>
                 </tr>
               </thead>
-              <tbody id="table-body"></tbody>
+              <tbody id="table-body" class="ml-200"></tbody>
             </table>
           </div>
         </div>
@@ -483,24 +501,24 @@
 
       const numberCell = document.createElement("td");
       numberCell.textContent = number;
-      numberCell.className = "text-gray-900 font-bold text-xl";
+      numberCell.className = "text-gray-900 font-bold text-xl text-center";
       row.appendChild(numberCell);
 
       const dateCell = document.createElement("td");
       dateCell.textContent = date;
-      dateCell.className = "text-gray-900 font-bold text-xl";
+      dateCell.className = "text-gray-900 font-bold text-xl text-center";
       row.appendChild(dateCell);
 
       const categoryCell = document.createElement("td");
       categoryCell.textContent = category;
-      categoryCell.className = "text-gray-900 font-bold text-xl";
+      categoryCell.className = "text-gray-900 font-bold text-xl text-center";
       row.appendChild(categoryCell);
 
       const actionCell = document.createElement("td");
       const deleteBtn = document.createElement("button");
       deleteBtn.textContent = "Delete";
       deleteBtn.className =
-        "bg-red-500 text-white px-2 py-1 rounded hover:bg-red-700";
+        "bg-red-500 text-white px-2 py-1 rounded hover:bg-red-700 ml-200";
       deleteBtn.addEventListener("click", () => {
         tableBody.removeChild(row);
       });
