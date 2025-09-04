@@ -29,24 +29,30 @@
       gap: 1em;
       box-sizing: border-box;
     }
+    .tables{
+      width: 100%;
+      padding: -20px;
+      border-collapse: collapse;
+    }
     form {
       display: flex;
       gap: 15px;
     }
     .input1 {
-      margin-left: -22px;
+      margin-left: -42px;
     }
     .input3 {
       margin-bottom: 20px;
     }
-    table {
+    /* table {
       width: 80%;
       padding: -20px;
       border-collapse: collapse;
-    }
+    } */
     .tables {
-      margin-left: 20%;
-      width: 80%;
+      margin-left: 8%;
+      width: 90%;
+      gap: 20%;
     }
     .hd {
       width: 10%;
@@ -310,9 +316,9 @@
       <form action="" id="assign">
         <div class="inputs1">
           <label for="branch" class="headings">Branch from</label><br />
-          <select name="branch" id="branch" class="text-gray-900">
+          <select name="branch" id="branch" class="text-gray-900 h-10 rounded-lg">
             <option value="select" class="text-gray-900">Select</option>
-            <option value="Agriculture" class="text-gray-900">
+            <option value="Agriculture" class="text-gray-900 h-10 rounded-lg">
               Agriculture
             </option>
             <option value="Westlands" class="text-gray-900">Westlands</option>
@@ -325,7 +331,7 @@
         <br />
         <div>
           <label for="time">Time of dispatch</label>
-          <input type="time" id="time" name="time" class="text-gray-900" />
+          <input type="time" id="time" name="time" class="text-gray-900 h-10 rounded-lg" />
         </div>
         <br />
         <div class="inputs2">
@@ -334,13 +340,13 @@
             type="text"
             id="location"
             name="location"
-            class="text-gray-900"
+            class="text-gray-900 h-10 rounded-lg"
           />
         </div>
         <br />
         <div>
           <label for="name">Rider assigned</label>
-          <input type="text" id="name" name="name" class="text-gray-900" />
+          <input type="text" id="name" name="name" class="text-gray-900 h-10 rounded-lg" />
         </div>
         <br />
         <!-- <div>
@@ -349,7 +355,7 @@
           </div><br> -->
         <div>
           <label for="number">Clients number</label>
-          <input type="text" id="number" name="number" class="text-gray-900" />
+          <input type="text" id="number" name="number" class="text-gray-900 h-10 rounded-lg" />
         </div>
         <br /><br /><br /><br />
         <div class="inputs3" class="headings">
@@ -380,23 +386,25 @@
             <tbody id="table-body"></tbody>
           </table> -->
 
-      <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table
-          class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
-        >
-          <thead
-            class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+      <div class="tables">
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+          <table
+            class="text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
           >
-            <tr>
-              <th scope="col" class="px-6 py-3">Branch from</th>
-              <th scope="col" class="px-6 py-3 text-center">time of dispatch</th>
-              <th scope="col" class="px-6 py-3 text-center">location</th>
-              <th scope="col" class="px-6 py-3 text-center">Rider</th>
-              <th scope="col" class="px-6 py-3">clients number</th>
-            </tr>
-          </thead>
-          <tbody id="table-body"></tbody>
-        </table>
+            <thead
+              class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+            >
+              <tr>
+                <th scope="col" class="px-6 py-3">Branch from</th>
+                <th scope="col" class="px-6 py-3">time of dispatch</th>
+                <th scope="col" class="px-6 py-3">location</th>
+                <th scope="col" class="px-6 py-3">Rider</th>
+                <th scope="col" class="px-6 py-3">clients number</th>
+              </tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+          </table>
+        </div>
       </div>
     </div>
   </body>
@@ -406,7 +414,6 @@
     const timeInput = document.getElementById("time");
     const toInput = document.getElementById("location");
     const riderInput = document.getElementById("name");
-    // const rnumberInput = document.getElementById("rnumber");
     const numberInput = document.getElementById("number");
     const tableBody = document.getElementById("table-body");
     const signoutInput = document.getElementById("signout");
@@ -445,67 +452,89 @@
       confirmInput.style.display = "none";
     });
 
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
+    // Load existing entries from localStorage on page load
+window.addEventListener("DOMContentLoaded", () => {
+  const savedEntries = JSON.parse(localStorage.getItem("entries")) || [];
+  savedEntries.forEach(entry => addRow(entry));
+});
 
-      const from = categoryInput.value;
-      const time = timeInput.value.trim();
-      const to = toInput.value.trim();
-      const rider = riderInput.value.trim();
-      // const rnumber = rnumberInput.value.trim();
-      const number = numberInput.value.trim();
+// Handle form submission
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
 
-      if (from === "select" || !time || !to || !rider || isNaN(number)) {
-        alert("Kindly fill in the required information");
-        return;
-      }
+  const from = categoryInput.value;
+  const time = timeInput.value.trim();
+  const to = toInput.value.trim();
+  const rider = riderInput.value.trim();
+  const number = numberInput.value.trim();
 
-      const row = document.createElement("tr");
+  if (from === "select" || !time || !to || !rider || isNaN(number)) {
+    alert("Kindly fill in the required information");
+    return;
+  }
 
-      const fromCell = document.createElement("td");
-      fromCell.textContent = from;
-      fromCell.className = "text-gray-900 font-bold text-lg";
-      row.appendChild(fromCell);
+  const entry = { from, time, to, rider, number };
+  addRow(entry);
 
-      const timeCell = document.createElement("td");
-      timeCell.textContent = time;
-      timeCell.className = "text-gray-900 font-bold text-lg text-center";
-      row.appendChild(timeCell);
+  // Save to localStorage
+  const entries = JSON.parse(localStorage.getItem("entries")) || [];
+  entries.push(entry);
+  localStorage.setItem("entries", JSON.stringify(entries));
 
-      const toCell = document.createElement("td");
-      toCell.textContent = to;
-      toCell.className = "text-gray-900 font-bold text-lg text-center";
-      row.appendChild(toCell);
+  form.reset();
+});
 
-      const riderCell = document.createElement("td");
-      riderCell.textContent = rider;
-      riderCell.className = "text-gray-900 font-bold text-lg text-center";
-      row.appendChild(riderCell);
+// Function to add a row to the table
+function addRow({ from, time, to, rider, number }) {
+  const row = document.createElement("tr");
 
-      // const rnumberCell = document.createElement("td");
-      // rnumberCell.textContent = rnumber;
-      // rnumberCell.className = "text-gray-900 font-bold text-lg";
-      // row.appendChild(rnumberCell);
+  const fromCell = document.createElement("td");
+  fromCell.textContent = from;
+  fromCell.className = "text-gray-900 font-bold text-lg";
+  row.appendChild(fromCell);
 
-      const numberCell = document.createElement("td");
-      numberCell.textContent = number;
-      numberCell.className = "text-gray-900 font-bold text-lg";
-      row.appendChild(numberCell);
+  const timeCell = document.createElement("td");
+  timeCell.textContent = time;
+  timeCell.className = "text-gray-900 font-bold text-lg text-center";
+  row.appendChild(timeCell);
 
-      const actionCell = document.createElement("td");
-      const deleteBtn = document.createElement("button");
-      deleteBtn.textContent = "Delete";
-      deleteBtn.className =
-        "bg-red-500 text-white px-2 py-1 rounded hover:bg-red-700";
-      deleteBtn.addEventListener("click", () => {
-        tableBody.removeChild(row);
-      });
-      actionCell.appendChild(deleteBtn);
-      row.appendChild(actionCell);
+  const toCell = document.createElement("td");
+  toCell.textContent = to;
+  toCell.className = "text-gray-900 font-bold text-lg text-center";
+  row.appendChild(toCell);
 
-      tableBody.appendChild(row);
+  const riderCell = document.createElement("td");
+  riderCell.textContent = rider;
+  riderCell.className = "text-gray-900 font-bold text-lg text-center";
+  row.appendChild(riderCell);
 
-      form.reset()
-    });
+  const numberCell = document.createElement("td");
+  numberCell.textContent = number;
+  numberCell.className = "text-gray-900 font-bold text-lg";
+  row.appendChild(numberCell);
+
+  const actionCell = document.createElement("td");
+  const deleteBtn = document.createElement("button");
+  deleteBtn.textContent = "Delete";
+  deleteBtn.className =
+    "bg-red-500 text-white px-2 py-1 rounded hover:bg-red-700";
+
+  deleteBtn.addEventListener("click", () => {
+    tableBody.removeChild(row);
+
+    // Remove from localStorage
+    const entries = JSON.parse(localStorage.getItem("entries")) || [];
+    const updatedEntries = entries.filter(
+      e => !(e.from === from && e.time === time && e.to === to && e.rider === rider && e.number === number)
+    );
+    localStorage.setItem("entries", JSON.stringify(updatedEntries));
+  });
+
+  actionCell.appendChild(deleteBtn);
+  row.appendChild(actionCell);
+
+  tableBody.appendChild(row);
+}
+
   </script>
 </html>

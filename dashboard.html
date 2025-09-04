@@ -10,12 +10,14 @@
     .mydash {
       position: relative;
     }
+
     .myheader {
       position: absolute;
       bottom: 0;
       left: 0;
       z-index: 10;
     }
+
     .sign {
       display: none;
       position: fixed;
@@ -30,6 +32,7 @@
       text-align: center;
       z-index: 1000;
     }
+
     .yess {
       background-color: rgb(0, 0, 182);
       color: white;
@@ -37,6 +40,7 @@
       border-radius: 0%;
       width: 50%;
     }
+
     .noo {
       background-color: rgb(0, 0, 182);
       color: white;
@@ -251,43 +255,101 @@
         </ul>
       </div>
     </aside>
+    <br /><br /><br /><br />
+    <div class="w-full max-w-4xl mx-auto mt-10">
+      <h2 class="text-center text-4xl font-bold mb-6">
+        Total Riders:
+        <span id="totalRiders" class="text-blue-700 font-bold">0</span>
+      </h2>
+
+      <div class="w-full h-[400px]">
+        <canvas id="riderChart" class="w-full h-full"></canvas>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="dashboard.js"></script>
   </body>
 
   <script>
-    const signoutInput = document.getElementById("signout");
-    const confirmInput = document.getElementById("confirm");
-    const yesInput = document.getElementById("yesBtn");
-    const noInput = document.getElementById("noBtn");
-    const homeInput = document.getElementById("home");
+    window.addEventListener("DOMContentLoaded", () => {
+      // fetching my local storage/
+      const riders = JSON.parse(localStorage.getItem("riders")) || [];
 
-    homeInput.addEventListener("click", (e) => {
-      e.preventDefault();
-      confirmInput.style.display = "block";
-      {
-        yesInput.addEventListener("click", (e) => {
-          e.preventDefault();
-          window.location.href = "index.html";
-        });
-        noInput.addEventListener("click", (e) => {
-          e.preventDefault();
-          confirmInput.style.display = "none";
-        });
-      }
-    });
+      
+      document.getElementById("totalRiders").textContent = riders.length;
 
-    signoutInput.addEventListener("click", (e) => {
-      e.preventDefault();
-      confirmInput.style.display = "block";
-    });
+      // update the total count
+      const categoryCounts = {};
+      riders.forEach((rider) => {
+        const category = rider.category;
+        categoryCounts[category] = (categoryCounts[category] || 0) + 1;
+      });
 
-    yesInput.addEventListener("click", (e) => {
-      e.preventDefault();
-      window.location.href = "login.html";
-    });
+      
+      const labels = Object.keys(categoryCounts);
+      const data = Object.values(categoryCounts);
 
-    noInput.addEventListener("click", (e) => {
-      e.preventDefault();
-      confirmInput.style.display = "none";
+      // renering the data from there to mybar graph
+      const ctx = document.getElementById("riderChart").getContext("2d");
+      new Chart(ctx, {
+        type: "bar", 
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: "Riders per Category",
+              data: data,
+              backgroundColor: [
+                "rgba(54, 162, 235, 0.6)",
+                "rgba(255, 99, 132, 0.6)",
+                "rgba(255, 206, 86, 0.6)",
+                "rgba(75, 192, 192, 0.6)",
+                "rgba(153, 102, 255, 0.6)",
+              ],
+              borderColor: "rgba(0, 0, 0, 0.1)",
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              display: false,
+            },
+            title: {
+              display: true,
+              text: "Rider Distribution by Category",
+            },
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false, 
+            layout: {
+              padding: {
+                top: 90,
+                bottom: 90,
+                left: 90,
+                right: 90,
+                width: 10,
+              },
+            },
+            plugins: {
+              legend: {
+                display: false,
+              },
+              title: {
+                display: true,
+                text: "Rider Distribution by Category",
+                font: {
+                  size: 14, 
+                },
+              },
+            },
+          },
+        },
+      });
     });
   </script>
 </html>

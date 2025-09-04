@@ -1,664 +1,630 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>Home</title>
-  </head>
-  <style>
-    .myname {
-      color: blue;
-      font-size: xx-large;
-    }
-    .myimage {
-      background-image: none;
-      border: none;
-    }
-    .front {
-      position: relative;
-    }
-    .text {
-      position: absolute;
-      font-weight: bold;
-      top: 24%;
-      left: 45%;
-      transform: translate(-50%, -50%);
-      color: white;
-      font-size: 6vw;
-      font-weight: bold;
-      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-    }
-    .myimage {
-      width: 100%;
-    }
-    .mylogs {
-      position: absolute;
-      font-weight: lighter;
-      top: 90%;
-      left: 20%;
-      transform: translate(-50%, -50%);
-      color: white;
-      font-size: 2vw;
-      font-weight: lighter;
-    }
-  </style>
-  <header class="text-gray-600 body-font">
-    <div
-      class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center"
-    >
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Home</title>
+</head>
+<style>
+  .myname {
+    color: blue;
+    font-size: xx-large;
+  }
+
+  .myimage {
+    background-image: none;
+    border: none;
+  }
+
+  .front {
+    position: relative;
+  }
+
+  .text {
+    position: absolute;
+    font-weight: bold;
+    top: 24%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 6vw;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  }
+
+  .myimage {
+    width: 100%;
+  }
+
+  .mylogs {
+    position: absolute;
+    font-weight: lighter;
+    top: 90%;
+    left: 20%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 2vw;
+    font-weight: lighter;
+  }
+</style>
+<header class="text-gray-600 body-font">
+  <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+    <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+      <div>
+        <img src="pulsefleet-logo.png" alt="" class="w-10 h-10 p-none rounded-full" />
+      </div>
+      <span class="ml-3 text-xl">Fleet <span class="myname">pulse</span></span>
+    </a>
+    <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
       <a
-        class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
-      >
-        <div>
-          <img
-            src="pulsefleet-logo.png"
-            alt=""
-            class="w-10 h-10 p-none rounded-full"
-          />
-        </div>
-        <span class="ml-3 text-xl"
-          >Fleet <span class="myname">pulse</span></span
-        >
-      </a>
-      <nav
-        class="md:ml-auto flex flex-wrap items-center text-base justify-center"
-      >
-        <a
-          class="mr-5 p-2 rounded-2xl transition-transform duration-300 ease-in-out hover:-translate-y-2 text-gray-100 bg-blue-700"
-          >Home</a
-        >
-        <a
+        class="mr-5 p-2 rounded-2xl transition-transform duration-300 ease-in-out hover:-translate-y-2 text-gray-100 bg-blue-700">Home</a>
+      <!-- <a
           href="about.html"
           class="mr-5 transition-transform duration-300 ease-in-out hover:-translate-y-2 text-gray-900"
           >About us</a
-        >
-        <a
-          href="contact.html"
-          class="mr-5 transition-transform duration-300 ease-in-out hover:-translate-y-2 text-gray-900"
-          >Contact</a
-        >
-        <a
-          href="signin.html"
-          class="mr-5 transition-transform duration-300 ease-in-out hover:-translate-y-2 text-gray-900"
-          >Signin</a
-        >
-        <a href="login.html">
-          <button
-            class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 text-base mt-4 md:mt-0 rounded"
-          >
-            Log in
-            <svg
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              class="w-4 h-4 ml-1"
-              viewBox="0 0 24 24"
-            >
-              <path d="M5 12h14M12 5l7 7-7 7"></path>
-            </svg>
-          </button>
-        </a>
-      </nav>
-    </div>
-  </header>
-  <body>
-    <div class="front">
-      <img src="bikes-img.jpg" alt="" class="myimage" />
-      <div class="text">
-        Welcome to <span class="text-blue-500">Fleet Pulse</span>
-      </div>
-      <div class="mylogs">
-        Already have an account?
-        <a href="login.html">
-          <button
-            class="py-1 px-4 bg-blue-500 hover:bg-blue-700 text-white focus:outline-none rounded-2xl"
-          >
-            Log in
-          </button>
-        </a>
-      </div>
-    </div>
-    <section class="text-gray-600 body-font">
-      <div class="container px-5 py-24 mx-auto">
-        <div class="flex flex-col text-center w-full mb-20">
-          <h1
-            class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900"
-          >
-            Our partners
-          </h1>
-        </div>
-        <div class="flex flex-wrap -m-4 text-center">
-          <div class="p-4 md:w-1/4 sm:w-1/2 w-full">
-            <div class="px-4 py-6 rounded-lg">
-              <img src="uber.png" alt="" />
-            </div>
-          </div>
-          <div class="p-4 md:w-1/4 sm:w-1/2 w-full">
-            <div class="px-4 py--4 rounded-lg">
-              <img src="glovo.png" alt="" />
-            </div>
-          </div>
-          <div class="p-4 md:w-1/4 sm:w-1/2 w-full">
-            <div class="px-4 py-6 rounded-lg">
-              <img src="ups.jpeg" alt="" />
-            </div>
-          </div>
-          <div class="p-4 md:w-1/4 sm:w-1/2 w-full">
-            <div class="px-4 py-6 rounded-lg">
-              <img src="dhl.png" alt="" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+        > -->
+      <a href="contact.html"
+        class="mr-5 transition-transform duration-300 ease-in-out hover:-translate-y-2 text-gray-900">Contact</a>
+      <a href="signin.html"
+        class="mr-5 transition-transform duration-300 ease-in-out hover:-translate-y-2 text-gray-900">Signin</a>
+      <a href="login.html">
+        <button
+          class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 text-base mt-4 md:mt-0 rounded">
+          Log in
+          <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+            <path d="M5 12h14M12 5l7 7-7 7"></path>
+          </svg>
+        </button>
+      </a>
+    </nav>
+  </div>
+</header>
 
-    <section class="text-gray-600 body-font overflow-hidden">
-      <div class="container px-5 py-24 mx-auto">
-        <div class="flex flex-col text-center w-full mb-20">
-          <h1
-            class="sm:text-4xl text-3xl font-medium title-font mb-2 text-gray-900"
-          >
-            Pricing
-          </h1>
-          <p class="lg:w-2/3 mx-auto leading-relaxed text-base text-gray-500">
-            Premium services for your company
-          </p>
+<body>
+  <div class="front">
+    <img src="bikes-img.jpg" alt="" class="myimage" />
+    <div class="text">
+      Welcome to <span class="text-blue-500">Fleet Pulse</span>
+    </div>
+    <div class="mylogs">
+      Already have an account?
+      <a href="login.html">
+        <button class="py-1 px-4 bg-blue-500 hover:bg-blue-700 text-white focus:outline-none rounded-2xl">
+          Log in
+        </button>
+      </a>
+    </div>
+  </div>
+  <section class="text-gray-600 body-font">
+    <div class="container px-5 py-24 mx-auto">
+      <div class="flex flex-col text-center w-full mb-20">
+        <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">
+          Our partners
+        </h1>
+      </div>
+      <div class="flex flex-wrap -m-9 text-center ml-20 mr-20 rounded-2xl bg-gray-200">
+        <div class="p-1 md:w-1/4">
+          <div class="px-20 py-6 rounded-lg">
+            <img src="ubers-removebg-preview.png" alt="" class="h-20 text-center m1-25 " style="color: white;" />
+          </div>
+        </div>
+        <div class="p-1 md:w-1/4">
+          <div class="px-20 py-6 rounded-lg">
+            <img src="eats-removebg-preview.png" alt="" class="h-20 text-center m1-25" />
+          </div>
+        </div>
+        <div class="p-5 md:w-1/4 sm:w-1/2 w-full">
+          <div class="px-12 py-5 rounded-lg">
+            <img src="glovo-removebg-preview.png" alt="" class="h-20 ml-20" />
+          </div>
+        </div>
+        <div class="p-4 md:w-1/4 sm:w-1/2 w-full">
+          <div class="px-4 py-6 rounded-lg">
+            <img src="ups-removebg-preview.png" alt="" class="h-20 ml-20" />
+          </div>
+        </div>
+        <!-- <div class="p-4 md:w-1/4 sm:w-1/2 w-full">
+            <div class="px-4 py-6 rounded-lg">
+              <img src="dhl.png" alt="" class="h-20"/>
+            </div>
+          </div> -->
+      </div>
+    </div>
+  </section>
+  <div class="container mx-auto flex px-5  md:flex-row flex-col items-center">
+    <div
+      class="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
+      <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">
+        Your companies
+        <br class="hidden lg:inline-block text-blue-800" />Logistics partner
+      </h1>
+      <p class="mb-8 leading-relaxed font-bold">
+        Founded in 2024, <span class="text-blue-800">Fleet Pulse</span> is a
+        forward-thinking logistics management company dedicated to
+        streamlining fleet operations for businesses of all sizes. We
+        specialize in delivering smart, data-driven solutions that optimize
+        transportation, enhance delivery efficiency, and reduce operational
+        costs. At Fleet Pulse, we empower companies to take control of their
+        logistics with precision, reliability, and real-time insights.
+      </p>
+    </div>
+    <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
+      <img class="object-cover object-center rounded" alt="hero" src="delivery-img.webp" />
+    </div>
+  </div>
+  </section>
+
+  <section class="text-gray-600 body-font text-sm">
+    <h1 class="text-center text-3xl font-bold">
+      <span class="text-blue-800">Services</span> offered
+    </h1>
+    <br /><br />
+    <div class="container px-5 py-24 mx-auto flex flex-wrap font-medium bg-blue-900">
+      <div class="flex relative pt-10 pb-20 sm:items-center md:w-2/3 mx-auto">
+        <div class="h-full w-6 absolute inset-0 flex items-center justify-center">
+          <div class="h-full w-1 bg-gray-200 pointer-events-none"></div>
+        </div>
+        <div
+          class="flex-shrink-0 w-6 h-6 rounded-full mt-10 sm:mt-0 inline-flex items-center justify-center bg-blue-500 text-white relative z-10 title-font font-medium text-sm">
+          1
+        </div>
+        <div class="flex-grow md:pl-8 pl-6 flex sm:items-center items-start flex-col sm:flex-row">
+          <div class="flex-shrink-0 w-9 h-19 text-blue-500 rounded-full inline-flex items-center justify-center">
+            <img src="cash-flow.png" alt="" />
+          </div>
+          <div class="flex-grow sm:pl-6 mt-6 sm:mt-0">
+            <h2 class="font-medium title-font text-gray-100 mb-1 text-xl">
+              Analyze performance and costs
+            </h2>
+            <p class="leading-relaxed text-gray-100">
+              Keep you fleet finances at record.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="flex relative pb-20 sm:items-center md:w-2/3 mx-auto">
+        <div class="h-full w-6 absolute inset-0 flex items-center justify-center">
+          <div class="h-full w-1 bg-gray-200 pointer-events-none"></div>
+        </div>
+        <div
+          class="flex-shrink-0 w-6 h-6 rounded-full mt-10 sm:mt-0 inline-flex items-center justify-center bg-blue-500 text-white relative z-10 title-font font-medium text-sm">
+          2
+        </div>
+        <div class="flex-grow md:pl-8 pl-6 flex sm:items-center items-start flex-col sm:flex-row">
+          <div class="flex-shrink-0 w-9 h-19 text-blue-500 rounded-full inline-flex items-center justify-center">
+            <img src="track.png" alt="" />
+          </div>
+          <div class="flex-grow sm:pl-6 mt-6 sm:mt-0">
+            <h2 class="font-medium title-font text-gray-100 mb-1 text-xl">
+              Track real-time locations
+            </h2>
+            <p class="leading-relaxed text-gray-100">
+              Know the location of you fleet any-time anyday.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="flex relative pb-20 sm:items-center md:w-2/3 mx-auto">
+        <div class="h-full w-6 absolute inset-0 flex items-center justify-center">
+          <div class="h-full w-1 bg-gray-200 pointer-events-none"></div>
+        </div>
+        <div
+          class="flex-shrink-0 w-6 h-6 rounded-full mt-10 sm:mt-0 inline-flex items-center justify-center bg-blue-500 text-white relative z-10 title-font font-medium text-sm">
+          3
+        </div>
+        <div class="flex-grow md:pl-8 pl-6 flex sm:items-center items-start flex-col sm:flex-row">
+          <div class="flex-shrink-0 w-9 h-19 text-blue-500 rounded-full inline-flex items-center justify-center">
+            <img src="tools.png" alt="" />
+          </div>
+          <div class="flex-grow sm:pl-6 mt-6 sm:mt-0">
+            <h2 class="font-medium title-font text-gray-100 mb-1 text-xl">
+              Stay ahead of service schedules
+            </h2>
+            <p class="leading-relaxed text-gray-100">
+              Keep your fleet well serviced for effeciency
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="flex relative pb-10 sm:items-center md:w-2/3 mx-auto">
+        <div class="h-full w-6 absolute inset-0 flex items-center justify-center">
+          <div class="h-full w-1 bg-gray-200 pointer-events-none"></div>
+        </div>
+        <div
+          class="flex-shrink-0 w-6 h-6 rounded-full mt-10 sm:mt-0 inline-flex items-center justify-center bg-blue-500 text-white relative z-10 title-font font-medium text-sm">
+          4
+        </div>
+        <div class="flex-grow md:pl-8 pl-6 flex sm:items-center items-start flex-col sm:flex-row">
+          <div class="flex-shrink-0 w-9 h-19 text-blue-500 rounded-full inline-flex items-center justify-center">
+            <img src="gasoline-pump.png" alt="" />
+          </div>
+          <div class="flex-grow sm:pl-6 mt-6 sm:mt-0">
+            <h2 class="font-medium title-font text-gray-100 mb-1 text-xl">
+              Optimize fuel usage
+            </h2>
+            <p class="leading-relaxed text-gray-100">
+              Keep your fleet on the road and keep them moving.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="text-gray-600 body-font overflow-hidden">
+    <div class="container px-5 py-24 mx-auto">
+      <div class="flex flex-col text-center w-full mb-20">
+        <h1 class="sm:text-4xl text-3xl font-medium title-font mb-2 text-gray-900">
+          Pricing
+        </h1>
+        <p class="lg:w-2/3 mx-auto leading-relaxed text-base text-gray-500">
+          Premium services for your company
+        </p>
+        <div class="flex mx-auto border-2 border-indigo-500 rounded overflow-hidden mt-6">
+          <button class="py-1 px-4 bg-blue-500 text-white focus:outline-none">
+            Monthly
+          </button>
+        </div>
+      </div>
+      <div class="flex flex-wrap -m-4">
+        <div class="p-4 xl:w-1/4 md:w-1/2 w-full">
           <div
-            class="flex mx-auto border-2 border-indigo-500 rounded overflow-hidden mt-6"
-          >
-            <button class="py-1 px-4 bg-blue-500 text-white focus:outline-none">
-              Monthly
-            </button>
-          </div>
-        </div>
-        <div class="flex flex-wrap -m-4">
-          <div class="p-4 xl:w-1/4 md:w-1/2 w-full">
-            <div
-              class="h-full p-6 rounded-lg border-2 border-gray-300 flex flex-col relative overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-2"
-            >
-              <h2 class="text-sm tracking-widest title-font mb-1 font-medium">
-                START PACKAGE
-              </h2>
-              <h1
-                class="text-5xl text-gray-900 pb-4 mb-4 border-b border-gray-200 leading-none"
-              >
-                $200
-                <span class="text-lg ml-1 font-normal text-gray-500">/mo</span>
-              </h1>
-              <p class="flex items-center text-gray-600 mb-2">
-                <span
-                  class="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0"
-                >
-                  <svg
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2.5"
-                    class="w-3 h-3"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M20 6L9 17l-5-5"></path>
-                  </svg> </span
-                >Real-time vehicle tracking
-              </p>
-              <p class="flex items-center text-gray-600 mb-2">
-                <span
-                  class="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0"
-                >
-                  <svg
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2.5"
-                    class="w-3 h-3"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M20 6L9 17l-5-5"></path>
-                  </svg> </span
-                >Basic route optimization
-              </p>
-              <p class="flex items-center text-gray-600 mb-6">
-                <span
-                  class="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0"
-                >
-                  <svg
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2.5"
-                    class="w-3 h-3"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M20 6L9 17l-5-5"></path>
-                  </svg> </span
-                >Driver assignment dashboard
-              </p>
-              <button
-                class="flex items-center mt-auto text-white bg-gray-400 border-0 py-2 px-4 w-full focus:outline-none hover:bg-gray-500 rounded"
-              >
-                Button
-                <svg
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  class="w-4 h-4 ml-auto"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M5 12h14M12 5l7 7-7 7"></path>
-                </svg>
-              </button>
-              <p class="text-xs text-gray-500 mt-3">
-                Perfect for small businesses or startups just getting started.
-              </p>
-            </div>
-          </div>
-          <div class="p-4 xl:w-1/4 md:w-1/2 w-full">
-            <div
-              class="h-full p-6 rounded-lg border-2 border-gray-300 flex flex-col relative overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-2"
-            >
-              <h2 class="text-sm tracking-widest title-font mb-1 font-medium">
-                GROWTH PULSE PACKAGE
-              </h2>
-              <h1
-                class="text-5xl text-gray-900 leading-none flex items-center pb-4 mb-4 border-b border-gray-200"
-              >
-                <span>$350</span>
-                <span class="text-lg ml-1 font-normal text-gray-500">/mo</span>
-              </h1>
-              <p class="flex items-center text-gray-600 mb-2">
-                <span
-                  class="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0"
-                >
-                  <svg
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2.5"
-                    class="w-3 h-3"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M20 6L9 17l-5-5"></path>
-                  </svg> </span
-                >All Starter features
-              </p>
-              <p class="flex items-center text-gray-600 mb-2">
-                <span
-                  class="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0"
-                >
-                  <svg
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2.5"
-                    class="w-3 h-3"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M20 6L9 17l-5-5"></path>
-                  </svg> </span
-                >Fuel usage monitoring
-              </p>
-              <p class="flex items-center text-gray-600 mb-2">
-                <span
-                  class="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0"
-                >
-                  <svg
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2.5"
-                    class="w-3 h-3"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M20 6L9 17l-5-5"></path>
-                  </svg> </span
-                >Maintenance scheduling alerts
-              </p>
-              <p class="flex items-center text-gray-600 mb-6">
-                <span
-                  class="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0"
-                >
-                  <svg
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2.5"
-                    class="w-3 h-3"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M20 6L9 17l-5-5"></path>
-                  </svg> </span
-                >Delivery time analytics
-              </p>
-              <button
-                class="flex items-center mt-auto text-white bg-gray-400 border-0 py-2 px-4 w-full focus:outline-none hover:bg-gray-600 rounded"
-              >
-                Button
-                <svg
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  class="w-4 h-4 ml-auto"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M5 12h14M12 5l7 7-7 7"></path>
-                </svg>
-              </button>
-              <p class="text-xs text-gray-500 mt-3">
-                Designed to boost operational efficiency
-              </p>
-            </div>
-          </div>
-          <div class="p-4 xl:w-1/4 md:w-1/2 w-full">
-            <div
-              class="h-full p-6 rounded-lg border-2 border-gray-300 flex flex-col relative overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-2"
-            >
-              <h2 class="text-sm tracking-widest title-font mb-1 font-medium">
-                ENTERPRISE PULSE PACKAGE
-              </h2>
-              <h1
-                class="text-5xl text-gray-900 leading-none flex items-center pb-4 mb-4 border-b border-gray-200"
-              >
-                <span>$500</span>
-                <span class="text-lg ml-1 font-normal text-gray-500">/mo</span>
-              </h1>
-              <p class="flex items-center text-gray-600 mb-2">
-                <span
-                  class="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0"
-                >
-                  <svg
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2.5"
-                    class="w-3 h-3"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M20 6L9 17l-5-5"></path>
-                  </svg> </span
-                >All Growth features
-              </p>
-              <p class="flex items-center text-gray-600 mb-2">
-                <span
-                  class="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0"
-                >
-                  <svg
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2.5"
-                    class="w-3 h-3"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M20 6L9 17l-5-5"></path>
-                  </svg> </span
-                >Advanced route planning with traffic data
-              </p>
-              <p class="flex items-center text-gray-600 mb-2">
-                <span
-                  class="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0"
-                >
-                  <svg
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2.5"
-                    class="w-3 h-3"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M20 6L9 17l-5-5"></path>
-                  </svg> </span
-                >Multi-depot coordination
-              </p>
-              <p class="flex items-center text-gray-600 mb-2">
-                <span
-                  class="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0"
-                >
-                  <svg
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2.5"
-                    class="w-3 h-3"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M20 6L9 17l-5-5"></path>
-                  </svg> </span
-                >Driver behavior analytics
-              </p>
-              <p class="flex items-center text-gray-600 mb-6">
-                <span
-                  class="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0"
-                >
-                  <svg
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2.5"
-                    class="w-3 h-3"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M20 6L9 17l-5-5"></path>
-                  </svg> </span
-                >Dedicated account manager
-              </p>
-              <button
-                class="flex items-center mt-auto text-white bg-gray-400 border-0 py-2 px-4 w-full focus:outline-none hover:bg-gray-500 rounded"
-              >
-                Button
-                <svg
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  class="w-4 h-4 ml-auto"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M5 12h14M12 5l7 7-7 7"></path>
-                </svg>
-              </button>
-              <p class="text-xs text-gray-500 mt-3">
-                Tailored for high-volume logistics teams
-              </p>
-            </div>
-          </div>
-          <div class="p-4 xl:w-1/4 md:w-1/2 w-full">
-            <div
-              class="h-full p-6 rounded-lg border-2 border-gray-300 flex flex-col relative overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-2"
-            >
-              <h2 class="text-sm tracking-widest title-font mb-1 font-medium">
-                PULSE INTELLIGENCE
-              </h2>
-              <h1
-                class="text-5xl text-gray-900 leading-none flex items-center pb-4 mb-4 border-b border-gray-200"
-              >
-                <span>$720</span>
-                <span class="text-lg ml-1 font-normal text-gray-500">/mo</span>
-              </h1>
-              <p class="flex items-center text-gray-600 mb-2">
-                <span
-                  class="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0"
-                >
-                  <svg
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2.5"
-                    class="w-3 h-3"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M20 6L9 17l-5-5"></path>
-                  </svg> </span
-                >All Enterprise features
-              </p>
-              <p class="flex items-center text-gray-600 mb-2">
-                <span
-                  class="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0"
-                >
-                  <svg
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2.5"
-                    class="w-3 h-3"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M20 6L9 17l-5-5"></path>
-                  </svg> </span
-                >Predictive maintenance modeling
-              </p>
-              <p class="flex items-center text-gray-600 mb-2">
-                <span
-                  class="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0"
-                >
-                  <svg
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2.5"
-                    class="w-3 h-3"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M20 6L9 17l-5-5"></path>
-                  </svg> </span
-                >24/7 premium support
-              </p>
-              <p class="flex items-center text-gray-600 mb-2">
-                <span
-                  class="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0"
-                >
-                  <svg
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2.5"
-                    class="w-3 h-3"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M20 6L9 17l-5-5"></path>
-                  </svg> </span
-                >Automated compliance reporting
-              </p>
-              <p class="flex items-center text-gray-600 mb-6">
-                <span
-                  class="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0"
-                >
-                  <svg
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2.5"
-                    class="w-3 h-3"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M20 6L9 17l-5-5"></path>
-                  </svg> </span
-                >Custom KPI dashboards
-              </p>
-              <button
-                class="flex items-center mt-auto text-white bg-gray-400 border-0 py-2 px-4 w-full focus:outline-none hover:bg-gray-500 rounded"
-              >
-                Button
-                <svg
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  class="w-4 h-4 ml-auto"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M5 12h14M12 5l7 7-7 7"></path>
-                </svg>
-              </button>
-              <p class="text-xs text-gray-500 mt-3">
-                Literally you probably haven't heard of them jean shorts.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </body>
-  <br />
-  <hr />
+            class="h-full p-6 rounded-lg border-2 border-gray-300 flex flex-col relative overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-2">
+            <h2 class="text-5xl tracking-widest title-font mb-1 font-medium">
+              START PACKAGE
+            </h2> <br><br>
+            <hr> <br>
+            <!-- <h1 class="text-5xl text-gray-900 pb-4 mb-4 border-b border-gray-200 leading-none">
+              $200
+              <span class="text-lg ml-1 font-normal text-gray-500">/mo</span>
+            </h1> -->
+            <p class="flex items-center text-gray-600 mb-2">
+              <span
+                class="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                  class="w-3 h-3" viewBox="0 0 24 24">
+                  <path d="M20 6L9 17l-5-5"></path>
+                </svg> </span>Real-time vehicle tracking
+            </p>
+            <p class="flex items-center text-gray-600 mb-2">
+              <span
+                class="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                  class="w-3 h-3" viewBox="0 0 24 24">
+                  <path d="M20 6L9 17l-5-5"></path>
+                </svg> </span>Basic route optimization
+            </p>
+            <p class="flex items-center text-gray-600 mb-6">
+              <span
+                class="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                  class="w-3 h-3" viewBox="0 0 24 24">
+                  <path d="M20 6L9 17l-5-5"></path>
+                </svg> </span>Driver assignment dashboard
+            </p>
 
-  <footer class="bg-blue-900 rounded-lg shadow-sm dark:bg-gray-900 m-4">
-    <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
-      <div class="sm:flex sm:items-center sm:justify-between">
-        <a
-          href="#"
-          class="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse text-white"
-        >
-          <img
-            src="pulsefleet-logo.png"
-            class="h-8 text-white"
-            alt="Fleet pulse logo"
-          />
-          <span
-            class="self-center text-2xl font-semibold whitespace-nowrap text-white"
-            >Fleet <span>Pulse</span></span
-          >
-        </a>
-        <ul
-          class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400"
-        >
-          <li>
-            <a href="about.html" class="hover:underline me-4 md:me-6 text-white"
-              >About</a
-            >
-          </li>
-          <li>
-            <a href="login.html" class="hover:underline me-4 md:me-6 text-white"
-              >Login</a
-            >
-          </li>
-          <li>
-            <a
-              href="signin.html"
-              class="hover:underline me-4 md:me-6 text-white"
-              >Signin</a
-            >
-          </li>
-          <li>
-            <a href="contact.html" class="hover:underline text-white"
-              >Contact</a
-            >
-          </li>
-        </ul>
+            <button class="bg-blue-500 hover:bg-blue-800 p-2 text-white rounded-lg mt-40"
+              onclick="document.getElementById('modal_1').showModal()">Get Details
+            </button>
+
+
+            <dialog id="modal_1" class="modal">
+              <form method="dialog">
+                <button class="w-6 h-8 text-white bg-red-500 ml-2 mt-2 rounded-sm">X</button>
+              </form>
+              <div class="modal-box p-40">
+                <h3 class="font-bold text-xl mb-2">Start Package</h3>
+                <p class="text-gray-600 mb-4 text-4xl">$200 / month</p>
+
+                <ul class="list-disc list-inside text-2xl text-gray-700 mb-4">
+                  <li>Real-time vehicle tracking</li>
+                  <li>Basic route optimization</li>
+                  <li>Driver assignment dashboard</li>
+                </ul>
+
+                <h2 class="underline font-bold text-lg">Sutability</h2>
+                <p class="text-lg text-gray-500 mb-4">
+                  Perfect for small to mid-sized fleets looking to streamline operations and monitor vehicle activity in
+                  real time.
+                </p>
+                <form method="dialog">
+                  <button class="text-white bg-blue-500 hover:bg-blue-800 p-2 rounded-sm">Upgrade Now</button>
+                </form>
+              </div>
+            </dialog>
+          </div>
+        </div>
+        <div class="p-4 xl:w-1/4 md:w-1/2 w-full">
+          <div
+            class="h-full p-6 rounded-lg border-2 border-gray-300 flex flex-col relative overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-2">
+            <h2 class="text-5xl tracking-widest title-font mb-1 font-medium">
+              GROWTH PULSE PACKAGE
+            </h2> <br><br>
+            <hr><br>
+            <!-- <h1 class="text-5xl text-gray-900 leading-none flex items-center pb-4 mb-4 border-b border-gray-200">
+              <span>$350</span>
+              <span class="text-lg ml-1 font-normal text-gray-500">/mo</span>
+            </h1> -->
+            <p class="flex items-center text-gray-600 mb-2">
+              <span
+                class="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                  class="w-3 h-3" viewBox="0 0 24 24">
+                  <path d="M20 6L9 17l-5-5"></path>
+                </svg> </span>All Starter features
+            </p>
+            <p class="flex items-center text-gray-600 mb-2">
+              <span
+                class="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                  class="w-3 h-3" viewBox="0 0 24 24">
+                  <path d="M20 6L9 17l-5-5"></path>
+                </svg> </span>Fuel usage monitoring
+            </p>
+            <p class="flex items-center text-gray-600 mb-2">
+              <span
+                class="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                  class="w-3 h-3" viewBox="0 0 24 24">
+                  <path d="M20 6L9 17l-5-5"></path>
+                </svg> </span>Maintenance scheduling alerts
+            </p>
+            <p class="flex items-center text-gray-600 mb-6">
+              <span
+                class="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                  class="w-3 h-3" viewBox="0 0 24 24">
+                  <path d="M20 6L9 17l-5-5"></path>
+                </svg> </span>Delivery time analytics
+            </p> <br><br><br>
+            <button class="bg-blue-500 hover:bg-blue-800 p-2 text-white rounded-lg"
+              onclick="document.getElementById('modal_2').showModal()">Get Details
+            </button>
+
+            <dialog id="modal_2" class="modal">
+              <form method="dialog">
+                  <button class="w-6 h-8 text-white bg-red-500 ml-2 mt-2 rounded-sm">X</button>
+                </form>
+              <div class="modal-box p-40">
+                 <h3 class="font-bold text-xl mb-2">Premium Package</h3>
+                    <p class="text-gray-600 mb-4 text-4xl">$350 / month</p>
+
+               <ul class="list-disc list-inside text-2xl text-gray-700 mb-4">
+                      <li>All Starter features</li>
+                      <li>Fuel usage monitoring</li>
+                      <li>Maintenance scheduling alerts</li>
+                      <li>Delivery time analytics</li>
+                    </ul>
+                
+                <h2 class="underline font-bold text-lg">Suitability</h2>
+                    <p class="text-lg text-gray-500 mb-4">
+                      Designed for growing fleets that need deeper insights into operational efficiency, fuel
+                      performance, and delivery metrics.
+                    </p>
+
+                <div class="modal-action">
+                   <form method="dialog">
+                      <button class="text-white bg-blue-500 hover:bg-blue-800 p-2 rounded-sm">Upgrade Now</button>
+                    </form>
+                </div>
+              </div>
+            </dialog>
+          </div>
+        </div>
+        <div class="p-4 xl:w-1/4 md:w-1/2 w-full">
+          <div
+            class="h-full p-6 rounded-lg border-2 border-gray-300 flex flex-col relative overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-2">
+            <h2 class="text-5xl tracking-widest title-font mb-1 font-medium">
+              ENTERPRISE PULSE PACKAGE
+            </h2> <br>
+            <hr><br>
+            <!-- <h1 class="text-5xl text-gray-900 leading-none flex items-center pb-4 mb-4 border-b border-gray-200">
+              <span>$500</span>
+              <span class="text-lg ml-1 font-normal text-gray-500">/mo</span>
+            </h1> -->
+            <p class="flex items-center text-gray-600 mb-2">
+              <span
+                class="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                  class="w-3 h-3" viewBox="0 0 24 24">
+                  <path d="M20 6L9 17l-5-5"></path>
+                </svg> </span>All Growth features
+            </p>
+            <p class="flex items-center text-gray-600 mb-2">
+              <span
+                class="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                  class="w-3 h-3" viewBox="0 0 24 24">
+                  <path d="M20 6L9 17l-5-5"></path>
+                </svg> </span>Advanced route planning with traffic data
+            </p>
+            <p class="flex items-center text-gray-600 mb-2">
+              <span
+                class="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                  class="w-3 h-3" viewBox="0 0 24 24">
+                  <path d="M20 6L9 17l-5-5"></path>
+                </svg> </span>Multi-depot coordination
+            </p>
+            <p class="flex items-center text-gray-600 mb-2">
+              <span
+                class="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                  class="w-3 h-3" viewBox="0 0 24 24">
+                  <path d="M20 6L9 17l-5-5"></path>
+                </svg> </span>Driver behavior analytics
+            </p>
+            <p class="flex items-center text-gray-600 mb-6">
+              <span
+                class="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                  class="w-3 h-3" viewBox="0 0 24 24">
+                  <path d="M20 6L9 17l-5-5"></path>
+                </svg> </span>Dedicated account manager
+            </p> <br><br>
+
+            <button class="bg-blue-500 hover:bg-blue-800 p-2 text-white rounded-lg"
+              onclick="document.getElementById('modal_3').showModal()">Get Details
+            </button>
+
+            <dialog id="modal_3" class="modal">
+              <form method="dialog">
+                  <button class="w-6 h-8 text-white bg-red-500 ml-2 mt-2 rounded-sm">X</button>
+                </form>
+              <div class="modal-box p-40 w-50">
+                <h3 class="font-bold text-xl mb-2">Enterprise Pulse Package</h3>
+                <p class="text-gray-600 mb-4 text-4xl">$500 / month</p>
+
+                <ul class="list-disc list-inside text-lg text-gray-700 mb-4">
+                  <li>All Growth features</li>
+                  <li>Advanced route planning with live traffic data</li>
+                  <li>Multi-depot coordination</li>
+                  <li>Driver behavior analytics</li>
+                  <li>Dedicated account manager</li>
+                </ul>
+
+                 <h2 class="underline font-bold text-lg">Suitability</h2>
+                <p class="text-lg text-gray-500 mb-4">
+                  Built for large-scale operations, this package delivers precision logistics, centralized control
+                  across multiple hubs, and deep driver performance insights—all backed by personalized support.
+                </p>
+                <div class="modal-action">
+                  <form method="dialog">
+                      <button class="text-white bg-blue-500 hover:bg-blue-800 p-2 rounded-sm">Upgrade Now</button>
+                    </form>
+                </div>
+              </div>
+            </dialog>
+
+
+          </div>
+          </dialog>
+        </div>
+        <div class="p-4 xl:w-1/4 md:w-1/2 w-full">
+          <div
+            class="h-full p-6 rounded-lg border-2 border-gray-300 flex flex-col relative overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-2">
+            <h2 class="text-5xl tracking-widest title-font mb-1 font-medium flex-wrap">
+              PULSE
+              INTELLI <span>GENCE</span>
+            </h2> <br>
+            <hr><br>
+            <!-- <h1 class="text-5xl text-gray-900 leading-none flex items-center pb-4 mb-4 border-b border-gray-200">
+              <span>$720</span>
+              <span class="text-lg ml-1 font-normal text-gray-500">/mo</span>
+            </h1> -->
+            <p class="flex items-center text-gray-600 mb-2">
+              <span
+                class="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                  class="w-3 h-3" viewBox="0 0 24 24">
+                  <path d="M20 6L9 17l-5-5"></path>
+                </svg> </span>All Enterprise features
+            </p>
+            <p class="flex items-center text-gray-600 mb-2">
+              <span
+                class="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                  class="w-3 h-3" viewBox="0 0 24 24">
+                  <path d="M20 6L9 17l-5-5"></path>
+                </svg> </span>Predictive maintenance modeling
+            </p>
+            <p class="flex items-center text-gray-600 mb-2">
+              <span
+                class="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                  class="w-3 h-3" viewBox="0 0 24 24">
+                  <path d="M20 6L9 17l-5-5"></path>
+                </svg> </span>24/7 premium support
+            </p>
+            <p class="flex items-center text-gray-600 mb-2">
+              <span
+                class="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                  class="w-3 h-3" viewBox="0 0 24 24">
+                  <path d="M20 6L9 17l-5-5"></path>
+                </svg> </span>Automated compliance reporting
+            </p>
+            <p class="flex items-center text-gray-600 mb-6">
+              <span
+                class="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                  class="w-3 h-3" viewBox="0 0 24 24">
+                  <path d="M20 6L9 17l-5-5"></path>
+                </svg> </span>Custom KPI dashboards
+            </p> <br><br><br>
+            <button class="bg-blue-500 hover:bg-blue-800 p-2 text-white rounded-lg"
+              onclick="document.getElementById('modal_4').showModal()">Get Details
+            </button>
+
+            <dialog id="modal_4" class="modal">
+              <form method="dialog">
+                  <button class="w-6 h-8 text-white bg-red-500 ml-2 mt-2 rounded-sm">X</button>
+                </form>
+              <div class="modal-box p-40">
+                <h3 class="font-bold text-xl mb-2">Elite Fleet Package</h3>
+                <p class="text-gray-600 mb-4 text-4xl">$650 / month</p>
+
+                <ul class="list-disc list-inside text-lg text-gray-700 mb-4">
+                  <li>All Enterprise features</li>
+                  <li>Predictive maintenance modeling</li>
+                  <li>24/7 premium support</li>
+                  <li>Automated compliance reporting</li>
+                  <li>Custom KPI dashboards</li>
+                </ul>
+                
+                <h2 class="underline font-bold text-lg">Suitability</h2>
+                <p class="text-lg text-gray-500 mb-4">
+                  Tailored for high-performance fleets, this package delivers predictive insights, full regulatory
+                  automation, and personalized analytics dashboards—backed by round-the-clock expert support.
+                </p>
+
+                <div class="modal-action">
+                   <form method="dialog">
+                      <button class="text-white bg-blue-500 hover:bg-blue-800 p-2 rounded-sm">Upgrade Now</button>
+                    </form>
+                </div>
+              </div>
+            </dialog>
+          </div>
+        </div>
       </div>
-      <hr
-        class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8"
-      />
-      <span
-        class="block text-sm text-gray-500 sm:text-center dark:text-gray-400"
-        >© 2024 <a href="index.html" class="hover:underline">Fleet pulse™</a>.
-        All Rights Reserved.</span
-      >
     </div>
-  </footer>
+  </section>
+
+</body>
+<br />
+<hr />
+
+<footer class="bg-blue-900 rounded-lg shadow-sm dark:bg-gray-900 m-4">
+  <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
+    <div class="sm:flex sm:items-center sm:justify-between">
+      <a href="#" class="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse text-white">
+        <img src="pulsefleet-logo.png" class="h-8 text-white" alt="Fleet pulse logo" />
+        <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">Fleet <span>Pulse</span></span>
+      </a>
+      <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
+        <!-- <li>
+          <a href="about.html" class="hover:underline me-4 md:me-6 text-white">About</a>
+        </li> -->
+        <li>
+          <a href="login.html" class="hover:underline me-4 md:me-6 text-white">Login</a>
+        </li>
+        <li>
+          <a href="signin.html" class="hover:underline me-4 md:me-6 text-white">Signin</a>
+        </li>
+        <li>
+          <a href="contact.html" class="hover:underline text-white">Contact</a>
+        </li>
+      </ul>
+    </div>
+    <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+    <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2024 <a href="index.html"
+        class="hover:underline">Fleet pulse™</a>.
+      All Rights Reserved.</span>
+  </div>
+</footer>
+
 </html>

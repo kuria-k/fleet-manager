@@ -39,7 +39,7 @@
       margin: 0%;
     }
     table {
-      width: 90%;
+      width: 100%;
       padding: -20px;
       border-collapse: collapse;
     }
@@ -373,7 +373,7 @@
               type="text"
               id="name"
               placeholder="John doe"
-              class="text-gray-900"
+              class="text-gray-900 h-10 rounded-lg"
             />
           </div>
           <div class="inputs2">
@@ -383,16 +383,16 @@
               id="number"
               name="number"
               placeholder="+2547-09-876-543"
-              class="text-gray-900"
+              class="text-gray-900  h-10 rounded-lg"
             />
           </div>
           <div class="inputs3">
             <label for="date" class="headings">Date added</label><br />
-            <input type="date" id="date" name="date" class="text-gray-900" />
+            <input type="date" id="date" name="date" class="text-gray-900  h-10 rounded-lg" />
           </div>
           <div class="inputs4">
             <label for="category" class="headings">Category</label><br />
-            <select name="category" id="category" class="text-gray-900">
+            <select name="category" id="category" class="text-gray-900  h-10 rounded-lg">
               <option value="select" class="text-gray-900">Select</option>
               <option value="Agriculture" class="text-gray-900">
                 Agriculture
@@ -416,19 +416,22 @@
         </div>
         <br />
         <div class="tables">
-          <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <table class="text-sm text-gray-500 dark:text-gray-400 border">
+          <div class="relative overflow-x-auto shadow-md sm:rounded-lg w-full">
+            <table class="text-sm text-gray-500 dark:text-gray-400 border mr-0">
               <thead
                 class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
               >
                 <tr>
-                  <th scope="col" class="px-6 py-3">Name</th>
-                  <th scope="col" class="px-6 py-3 text-center">Phone number</th>
+                  <th scope="col" class="px-9 py-3">Name</th>
+                  <th scope="col" class="px-6 py-3 text-center">
+                    Phone number
+                  </th>
                   <th scope="col" class="px-6 py-3 text-center">Date</th>
-                  <th scope="col" class="px-6 py-3 text-right">Branch</th>
+                  <th scope="col" class="px-6 py-3 text-left">Branch</th>
                 </tr>
               </thead>
-              <tbody id="table-body" class="ml-200"></tbody>
+              <tbody id="table-body" class="ml-500"></tbody>
+              <!-- <form action="" id="my-form"></form> -->
             </table>
           </div>
         </div>
@@ -436,48 +439,57 @@
     </div>
   </body>
   <script>
-    const form = document.getElementById("add-form");
-    const nameinput = document.getElementById("name");
-    const numberinput = document.getElementById("number");
-    const dateinput = document.getElementById("date");
-    const categoryinput = document.getElementById("category");
-    const tableBody = document.getElementById("table-body");
-    const signoutInput = document.getElementById("signout");
-    const confirmInput = document.getElementById("confirm");
-    const yesInput = document.getElementById("yesBtn");
-    const noInput = document.getElementById("noBtn");
-    const homeInput = document.getElementById("home");
+        const form = document.getElementById("add-form");
+        const nameinput = document.getElementById("name");
+        const numberinput = document.getElementById("number");
+        const dateinput = document.getElementById("date");
+        const categoryinput = document.getElementById("category");
+        const tableBody = document.getElementById("table-body");
+        // const formInput = document.getElementById("my-form");
+        const signoutInput = document.getElementById("signout");
+        const confirmInput = document.getElementById("confirm");
+        const yesInput = document.getElementById("yesBtn");
+        const noInput = document.getElementById("noBtn");
+        const homeInput = document.getElementById("home");
 
-    signoutInput.addEventListener("click", (e) => {
-      e.preventDefault();
-      confirmInput.style.display = "block";
-    });
+        signoutInput.addEventListener("click", (e) => {
+          e.preventDefault();
+          confirmInput.style.display = "block";
+        });
 
-    homeInput.addEventListener("click", (e) => {
-      e.preventDefault();
-      confirmInput.style.display = "block";
-      {
+        homeInput.addEventListener("click", (e) => {
+          e.preventDefault();
+          confirmInput.style.display = "block";
+          {
+            yesInput.addEventListener("click", (e) => {
+              e.preventDefault();
+              window.location.href = "index.html";
+            });
+            noInput.addEventListener("click", (e) => {
+              e.preventDefault();
+              confirmInput.style.display = "none";
+            });
+          }
+        });
+
         yesInput.addEventListener("click", (e) => {
           e.preventDefault();
-          window.location.href = "index.html";
+          window.location.href = "login.html";
         });
+
         noInput.addEventListener("click", (e) => {
           e.preventDefault();
           confirmInput.style.display = "none";
         });
-      }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      const riders = JSON.parse(localStorage.getItem("riders")) || [];
+      riders.forEach((rider) => {
+        addRiderToTable(rider);
+      });
     });
 
-    yesInput.addEventListener("click", (e) => {
-      e.preventDefault();
-      window.location.href = "login.html";
-    });
-
-    noInput.addEventListener("click", (e) => {
-      e.preventDefault();
-      confirmInput.style.display = "none";
-    });
-
+    // Form submission logic
     form.addEventListener("submit", (e) => {
       e.preventDefault();
 
@@ -486,49 +498,70 @@
       const date = dateinput.value;
       const category = categoryinput.value;
 
-      //  code validation
       if (!name || isNaN(number) || !date || category === "select") {
         alert("Please fill in all fields correctly.");
         return;
       }
 
+      const newRider = { name, number, date, category };
+
+      // Save to localStorage
+      const riders = JSON.parse(localStorage.getItem("riders")) || [];
+      riders.push(newRider);
+      localStorage.setItem("riders", JSON.stringify(riders));
+
+      // Add to table
+      addRiderToTable(newRider);
+
+      form.reset();
+    });
+
+    // Function to add a rider row to the table
+    function addRiderToTable({ name, number, date, category }) {
       const row = document.createElement("tr");
 
       const nameCell = document.createElement("td");
       nameCell.textContent = name;
-      nameCell.className = "text-gray-900 font-bold text-xl";
+      nameCell.className = "text-gray-900 font-bold text-xl ml-590";
       row.appendChild(nameCell);
 
       const numberCell = document.createElement("td");
       numberCell.textContent = number;
-      numberCell.className = "text-gray-900 font-bold text-xl text-center";
+      numberCell.className = "text-gray-900 font-bold text-xl text-center ml-690";
       row.appendChild(numberCell);
 
       const dateCell = document.createElement("td");
       dateCell.textContent = date;
-      dateCell.className = "text-gray-900 font-bold text-xl text-center";
+      dateCell.className = "text-gray-900 font-bold text-xl text-center ml-790";
       row.appendChild(dateCell);
 
       const categoryCell = document.createElement("td");
       categoryCell.textContent = category;
-      categoryCell.className = "text-gray-900 font-bold text-xl text-center";
+      categoryCell.className = "text-gray-900 font-bold text-xl text-center ml-890";
       row.appendChild(categoryCell);
 
       const actionCell = document.createElement("td");
       const deleteBtn = document.createElement("button");
       deleteBtn.textContent = "Delete";
       deleteBtn.className =
-        "bg-red-500 text-white px-2 py-1 rounded hover:bg-red-700 ml-200";
+        "bg-red-500 text-white px-2 py-1 rounded hover:bg-red-700 ml-900";
+
       deleteBtn.addEventListener("click", () => {
-        tableBody.removeChild(row);
+        row.remove();
+
+        // Remove from localStorage
+        let riders = JSON.parse(localStorage.getItem("riders")) || [];
+        riders = riders.filter(
+          (r) =>
+            !(r.name === name && r.number === number && r.date === date && r.category === category)
+        );
+        localStorage.setItem("riders", JSON.stringify(riders));
       });
+
       actionCell.appendChild(deleteBtn);
       row.appendChild(actionCell);
 
       tableBody.appendChild(row);
-
-      // Clear form
-      form.reset();
-    });
+    }
   </script>
 </html>
