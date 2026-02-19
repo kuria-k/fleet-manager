@@ -94,21 +94,31 @@
             <a href="index.html" class="text-gray-600 hover:text-blue-600 transition-colors font-medium">Home</a>
             <a href="contact.html" class="text-gray-600 hover:text-blue-600 transition-colors font-medium">Contact</a>
           </div>
-          <button class="md:hidden p-2 rounded-lg hover:bg-blue-50">
-            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <button id="menu-btn" class="md:hidden p-2 rounded-lg hover:bg-blue-50" onclick="toggleMenu()">
+            <svg id="icon-open" class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+            <svg id="icon-close" class="w-6 h-6 text-blue-600 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
             </svg>
           </button>
         </div>
       </div>
+      <!-- Mobile Menu -->
+      <div id="mobile-menu" class="hidden md:hidden border-t border-blue-100 bg-white px-4 py-4 space-y-3">
+        <a href="index.html" class="block text-gray-600 hover:text-blue-600 font-medium py-2">Home</a>
+        <a href="contact.html" class="block text-gray-600 hover:text-blue-600 font-medium py-2">Contact</a>
+        <!-- <a href="auth.html" class="block text-gray-600 hover:text-blue-600 font-medium py-2">Sign up</a> -->
+        <a href="login.html" class="block w-full text-center border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-6 py-2 rounded-xl font-medium transition-all">Log in</a>
+      </div>
     </nav>
 
     <!-- Main -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div class="grid lg:grid-cols-2 gap-12 items-start">
 
         <!-- Left: Info panel -->
-        <div class="space-y-8 lg:sticky lg:top-24">
+        <div class="space-y-10 lg:sticky lg:top-24 py-10">
           <div class="blue-gradient rounded-3xl p-8 text-white">
             <h1 class="text-4xl font-bold mb-4" id="hero-title">Welcome to Fleet Pulse</h1>
             <p class="text-blue-100 text-lg mb-8" id="hero-sub">Sign in or create an account to manage your fleet efficiently.</p>
@@ -197,8 +207,8 @@
                       <span class="text-sm text-gray-600">Remember me</span>
                     </label>
                     <a href="#" class="text-sm text-blue-600 hover:underline font-medium">Forgot password?</a>
-                  </div>
-                  <button type="submit" class="w-full blue-btn text-white font-semibold py-3 px-6 rounded-xl flex items-center justify-center gap-2 group">
+                  </div> <br><br> <br>
+                  <button type="submit" class="w-full blue-btn text-white font-semibold mt-3 py-3 px-6 rounded-xl flex items-center justify-center gap-9 group">
                     <span>Access Dashboard</span>
                     <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
                   </button>
@@ -207,7 +217,7 @@
               </div>
 
               <!-- SIGN UP FORM -->
-              <div class="form-panel hidden-panel" id="panel-signup">
+              <div class="form-panel hidden-panel py-10" id="panel-signup">
                 <div class="text-center mb-6">
                   <h2 class="text-2xl font-bold text-blue-600 mb-1">Create Account</h2>
                   <p class="text-gray-500 text-sm">Fill in your details to get started</p>
@@ -245,7 +255,7 @@
                   <div class="flex items-start gap-2">
                     <input type="checkbox" id="terms" class="mt-1 w-4 h-4 text-blue-600 rounded border-gray-300" />
                     <label for="terms" class="text-sm text-gray-600">I agree to the <a href="#" class="text-blue-600 hover:underline">Terms of Service</a> and <a href="#" class="text-blue-600 hover:underline">Privacy Policy</a></label>
-                  </div>
+                  </div> 
                   <button type="submit" class="w-full blue-btn text-white font-semibold py-3 px-6 rounded-xl flex items-center justify-center gap-2 group">
                     <span>Create Account</span>
                     <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
@@ -254,7 +264,7 @@
                 </form>
               </div>
 
-            </div><!-- /forms-wrapper -->
+            </div>
 
             <!-- Security note -->
             <div class="mt-6 text-center text-xs text-gray-400 flex items-center justify-center gap-1">
@@ -301,6 +311,15 @@
     </footer>
 
     <script>
+      function toggleMenu() {
+        const menu = document.getElementById('mobile-menu');
+        const iconOpen = document.getElementById('icon-open');
+        const iconClose = document.getElementById('icon-close');
+        menu.classList.toggle('hidden');
+        iconOpen.classList.toggle('hidden');
+        iconClose.classList.toggle('hidden');
+      }
+
       let currentTab = 'login';
 
       function switchTab(tab) {
