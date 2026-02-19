@@ -1,545 +1,595 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>Manager</title>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <title>Scheduled Maintenance — FleetPulse</title>
   <style>
-    .mydash {
-      position: relative;
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    #sidebar-mount { display: contents; }
+    .fade-up {
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.5s ease forwards;
     }
-    .myheader {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      z-index: 10;
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    .row-in { animation: rowSlide 0.35s ease both; }
+    @keyframes rowSlide {
+      from { opacity: 0; transform: translateX(-12px); }
+      to   { opacity: 1; transform: translateX(0); }
     }
-    .myservicing {
-      margin-left: 260px;
-      width: 84%;
-      text-align: center;
-      background-color: rgb(0, 0, 156);
-      padding: 3em;
-      color: white;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1em;
-      box-sizing: border-box;
-    }
-    form {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 55px;
-    }
-    .inputs1 {
-      flex: 1 1 150px;
-      padding: 0.5em;
-      font-size: 1em;
-      border: none;
-      border-radius: 4px;
-      color: black;
-      box-sizing: border-box;
-    }
-    .inputs2 {
-      flex: 1 1 150px;
-      padding: 0.5em;
-      font-size: 1em;
-      border: none;
-      border-radius: 4px;
-      color: black;
-      box-sizing: border-box;
-    }
-    .inputs3 {
-      flex: 1 1 150px;
-      padding: 0.5em;
-      font-size: 1em;
-      border: none;
-      border-radius: 4px;
-      color: black;
-      box-sizing: border-box;
-    }
-    .inputs4 {
-      flex: 1 1 150px;
-      padding: 0.5em;
-      font-size: 1em;
-      border: none;
-      border-radius: 4px;
-      color: black;
-      box-sizing: border-box;
-    }
-    .inputs5 {
-      flex: 1 1 150px;
-      padding: 0.5em;
-      font-size: 1em;
-      border: none;
-      border-radius: 4px;
-      color: black;
-      box-sizing: border-box;
-    }
-    button {
-      text-align: center;
-      margin-top: 20px;
-      margin-bottom: 20px;
-      width: 100%;
-      padding: 10px;
-    }
-    table {
-      width: 80%;
-      padding: -20px;
-      border-collapse: collapse;
-    }
-    .tables {
-      margin-left: 20%;
-      width: 80%;
-    }
-    .hd {
-      width: 10%;
-    }
-    tbody {
-      width: 100%;
-    }
-    th,
-    td {
-      padding: 20px 2px;
-      text-align: center;
-      border-bottom: 1px solid #ddd;
-      width: 50%;
-      margin: 0%;
-    }
-    .sign {
-      display: none;
-      position: fixed;
-      top: 40%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: white;
-      color: rgb(0, 0, 182);
-      border: 2px solid #333;
-      padding: 10px;
-      font-size: 25px;
-      border-radius: 0%;
-      text-align: center;
-      z-index: 1000;
-    }
-    .yess {
-      background-color: rgb(0, 0, 182);
-      color: white;
-      padding: 0.1em;
-      width: 50%;
-      text-align: center;
-      display: block;
-      border-color: black;
-      margin: auto;
-      border: 2px;
-      position: relative;
-      border-radius: 20px;
-      border: 1px solid gray;
-      box-shadow: 0 25px 45px rgb(5, 5, 115);
-      z-index: 10;
-    }
-    .noo {
-      background-color: rgb(0, 0, 182);
-      color: white;
-      padding: 0.1em;
-      width: 50%;
-      text-align: center;
-      display: block;
-      border-color: black;
-      margin: auto;
-      border: 2px;
-      position: relative;
-      border-radius: 20px;
-      border: 1px solid gray;
-      box-shadow: 0 25px 45px rgb(5, 5, 115);
-      z-index: 10;
-    }
+    select { background-image: none; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 99px; }
+    #confirm-overlay { backdrop-filter: blur(4px); }
+    #update-overlay  { backdrop-filter: blur(4px); }
   </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
 
-  <body>
-    <nav
-      class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700"
-    >
-      <div class="px-3 py-3 lg:px-5 lg:pl-3">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center justify-start rtl:justify-end">
-            <button
-              data-drawer-target="logo-sidebar"
-              data-drawer-toggle="logo-sidebar"
-              aria-controls="logo-sidebar"
-              type="button"
-              class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-            >
-              <span class="sr-only">Open sidebar</span>
-              <svg
-                class="w-6 h-6"
-                aria-hidden="true"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  clip-rule="evenodd"
-                  fill-rule="evenodd"
-                  d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
-                ></path>
-              </svg>
-            </button>
-            <a
-              class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
-            >
-              <div>
-                <img
-                  src="pulsefleet-logo.png"
-                  alt=""
-                  class="w-10 h-10 p-none rounded-full"
-                />
-              </div>
-              <span class="ml-3 text-xl text-gray-100"
-                >Fleet
-                <span class="text-blue-800 font-bold text-2xl"
-                  >Pulse</span
-                ></span
-              >
-            </a>
+  <!-- SIDEBAR -->
+  <div id="sidebar-mount"></div>
+
+  <!-- TOP NAV -->
+  <header class="fixed top-0 right-0 left-0 sm:left-64 z-30 h-16 bg-white border-b border-slate-100 flex items-center justify-between px-6 shadow-sm">
+    <button id="sidebar-toggle" class="sm:hidden p-2 rounded-lg hover:bg-slate-100 text-slate-500 transition-colors">
+      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+    <div class="flex items-center gap-2 text-sm">
+      <span class="text-slate-400">Fleet Manager</span>
+      <span class="text-slate-300">/</span>
+      <span class="font-semibold text-slate-700">Scheduled Maintenance</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <button class="relative p-2 rounded-lg hover:bg-slate-100 text-slate-400 transition-colors">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+        </svg>
+        <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-blue-500 rounded-full"></span>
+      </button>
+      <button id="signout-btn"
+        class="flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-red-500 bg-slate-100 hover:bg-red-50 px-4 py-2 rounded-lg transition-all">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+        </svg>
+        Sign out
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="sm:ml-64 pt-16 min-h-screen">
+    <div class="p-6 md:p-8 max-w-6xl mx-auto">
+
+      <!-- Page header -->
+      <div class="mb-8 fade-up" style="animation-delay:.05s">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-blue-500 flex items-center justify-center shadow-md shadow-blue-500/25">
+            <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
           </div>
-          <nav
-            class="md:ml-auto flex flex-wrap items-center text-base justify-center"
-          >
-            <a
-              href="index.html"
-              id="home"
-              class="mr-5 p-2 rounded-2xl transition-transform duration-300 ease-in-out hover:-translate-y-2"
-              >Home</a
-            >
-            <a
-              href="manager.html"
-              class="mr-5 p-2 rounded-2xl duration-300 ease-in-out hover:-translate-y-2 text-gray-100 bg-blue-700"
-              >Fleet manager</a
-            >
-            <!-- <a href="login.html"
-              class="mr-5 rounded-2xl transition-transform duration-300 ease-in-out hover:-translate-y-2"
-              >Sign-out</a
-            > -->
-            <a href="login.html">
-              <button
-                id="signout"
-                class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0"
-              >
-                Sign-out
-                <svg
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  class="w-4 h-4 ml-1"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M5 12h14M12 5l7 7-7 7"></path>
-                </svg>
-              </button>
-            </a>
-          </nav>
+          <div>
+            <h1 class="text-xl font-bold text-slate-800">Scheduled Maintenance</h1>
+            <p class="text-sm text-slate-400">Track and update bike servicing schedules</p>
+          </div>
         </div>
       </div>
-    </nav>
-    <div id="confirm" class="sign">
-      <p>Are you sure you want to sign out?</p>
-      <button id="yesBtn" class="yess">Yes</button><br />
-      <button id="noBtn" class="noo">No</button>
-    </div>
 
-    <aside
-      id="logo-sidebar"
-      class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
-      aria-label="Sidebar"
-    >
-      <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
-        <ul class="space-y-2 font-medium">
-          <li>
-            <a
-              href="dashboard.html"
-              class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-            >
-              <svg
-                class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 22 21"
-              >
-                <path
-                  d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z"
-                />
-                <path
-                  d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z"
-                />
+      <!-- STATS ROW -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6 fade-up" style="animation-delay:.08s">
+        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm px-5 py-4">
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">Total Bikes</p>
+          <p class="text-2xl font-bold text-slate-800" id="stat-total">0</p>
+        </div>
+        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm px-5 py-4">
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">Up to Date</p>
+          <p class="text-2xl font-bold text-emerald-600" id="stat-ok">0</p>
+        </div>
+        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm px-5 py-4">
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">Due Soon</p>
+          <p class="text-2xl font-bold text-amber-500" id="stat-due">0</p>
+        </div>
+        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm px-5 py-4">
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">Overdue</p>
+          <p class="text-2xl font-bold text-red-500" id="stat-overdue">0</p>
+        </div>
+      </div>
+
+      <!-- FORM CARD -->
+      <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 md:p-8 mb-6 fade-up" style="animation-delay:.1s">
+        <h2 class="text-sm font-semibold text-slate-500 uppercase tracking-widest mb-5 flex items-center gap-2">
+          <span class="w-5 h-px bg-slate-200"></span>
+          Log New Bike
+          <span class="flex-1 h-px bg-slate-100"></span>
+        </h2>
+
+        <form id="maintenance-form" autocomplete="off">
+          <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
+
+            <!-- Bike plates -->
+            <div class="flex flex-col gap-1.5">
+              <label for="plates" class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Bike Plates</label>
+              <input type="text" id="plates" placeholder="e.g. KMFB 571K"
+                class="w-full bg-slate-50 border border-blue-200 rounded-xl px-4 py-2.5 text-sm text-blue-800 placeholder-slate-300 outline-none focus:border-blue-400 focus:ring-3 focus:ring-blue-100 transition-all font-mono tracking-widest uppercase"/>
+            </div>
+
+            <!-- Rider name — loaded from localStorage -->
+            <div class="flex flex-col gap-1.5">
+              <label for="rider" class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Rider Name</label>
+              <div class="relative">
+                <select id="rider"
+                  class="w-full appearance-none bg-slate-50 border border-blue-200 rounded-xl px-4 py-2.5 text-sm text-slate-700 outline-none focus:border-blue-400 focus:ring-3 focus:ring-blue-100 transition-all cursor-pointer pr-9">
+                  <option value="select">— Select Rider —</option>
+                </select>
+                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-xs">▾</span>
+              </div>
+              <p id="no-riders-msg" class="hidden text-xs text-amber-600 bg-amber-50 border border-amber-200 rounded-xl px-3 py-2">
+                ⚠ No riders yet. <a href="add.html" class="underline font-semibold">Add riders →</a>
+              </p>
+            </div>
+
+            <!-- Previous service -->
+            <div class="flex flex-col gap-1.5">
+              <label for="prev-service" class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Previous Service</label>
+              <input type="date" id="prev-service"
+                class="w-full bg-slate-50 border border-blue-200 rounded-xl px-4 py-2.5 text-sm text-slate-700 outline-none focus:border-blue-400 focus:ring-3 focus:ring-blue-100 transition-all"/>
+            </div>
+
+            <!-- Next service -->
+            <div class="flex flex-col gap-1.5">
+              <label for="next-service" class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Next Service</label>
+              <input type="date" id="next-service"
+                class="w-full bg-slate-50 border border-blue-200 rounded-xl px-4 py-2.5 text-sm text-slate-700 outline-none focus:border-blue-400 focus:ring-3 focus:ring-blue-100 transition-all"/>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between flex-wrap gap-3">
+            <p id="form-error" class="text-sm text-red-500 hidden"> Please fill in all fields correctly.</p>
+            <button type="submit"
+              class="ml-auto flex items-center gap-2 bg-blue-500 hover:bg-orange-600 text-white text-sm font-semibold px-6 py-2.5 rounded-xl shadow-md shadow-orange-400/25 hover:shadow-orange-400/40 transition-all active:scale-95">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
               </svg>
-              <span class="ms-3">Dashboard</span>
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="add.html"
-              class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-            >
-              <div class="w-5 h-5"><img src="plus.png" alt="" /></div>
-              <span class="flex-1 ms-3 whitespace-nowrap">Add rider</span>
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="assign.html"
-              class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-            >
-              <div class="w-5 h-5"><img src="delivery-man.png" alt="" /></div>
-              <span class="flex-1 ms-3 whitespace-nowrap">Assign delivery</span>
-              <span
-                class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300"
-                >3</span
-              >
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="report.html"
-              class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-            >
-              <div class="w-5 h-5"><img src="data-analytics.png" alt="" /></div>
-              <span class="flex-1 ms-3 whitespace-nowrap">Generate report</span>
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="#"
-              class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-            >
-              <div class="w-5 h-5"><img src="track.png" alt="" /></div>
-              <span class="flex-1 ms-3 whitespace-nowrap">Track rider</span>
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="expense.html"
-              class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-            >
-              <div class="w-5 h-5"><img src="cash-flow.png" alt="" /></div>
-              <span class="flex-1 ms-3 whitespace-nowrap"
-                >Expense from bikes</span
-              >
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="maintainance.html"
-              class="flex items-center p-2 text-gray-100 rounded-lg dark:text-white bg-blue-700 group"
-            >
-              <div class="w-5 h-5"><img src="tools.png" alt="" /></div>
-              <span class="flex-1 ms-3 whitespace-nowrap"
-                >Scheduled maintenance</span
-              >
-            </a>
-          </li>
-        </ul>
+              Add Bike
+            </button>
+          </div>
+        </form>
       </div>
-    </aside>
-    <br /><br /><br /><br /><br />
 
-    <div class="myservicing">
-      <form action="" id="maintainance">
-        <div class="input1">
-          <label for="plates">Bike plates</label><br />
-          <input
-            type="text"
-            id="username"
-            name="username"
-            placeholder="KMFB 571K"
-            class="text-gray-900 h-10 rounded-lg"
-          /><br /><br />
-        </div>
-        <div class="input2">
-          <label for="name">Riders name</label><br />
-          <input
-            type="text"
-            id="name"
-            name="name"
-            placeholder="John Doe"
-            class="text-gray-900 h-10 rounded-lg"
-          /><br /><br />
-        </div>
-        <div class="input4">
-          <label for="date">Previous service</label><br />
-          <input
-            type="date"
-            id="date"
-            name="date"
-            class="text-gray-900 h-10 rounded-lg"
-          />
-        </div>
-        <div class="input5">
-          <label for="date">Next service</label><br />
-          <input
-            type="date"
-            id="date"
-            name="datee"
-            class="text-gray-900 h-10 rounded-lg"
-          />
-        </div>
-        <div class="inputs6" class="headings">
-          <button
-            type="submit"
-            class="bg-sky-500 hover:bg-sky-800 hover:text-white p-2 py-2 mb-4 text-center h-10 rounded-lg"
-            id="button"
-          >
-            Add
-          </button>
-        </div>
-      </form>
-    </div>
-    <br /><br />
+      <!-- TABLE CARD -->
+      <div class="bg-white rounded-2xl border border-slate-100 shadow-sm fade-up" style="animation-delay:.15s">
 
-    <div class="tables">
-      <table>
-        <thead>
-          <tr>
-            <th class="hd">Bike plates</th>
-            <th class="hd">Rider</th>
-            <th class="hd">Previous service</th>
-            <th class="hd">Next service</th>
-          </tr>
-        </thead>
-        <tbody id="table-body" class="mybody"></tbody>
-      </table>
+        <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100 flex-wrap gap-3">
+          <div>
+            <h2 class="font-bold text-slate-800">Maintenance Schedule</h2>
+            <p class="text-xs text-slate-400 mt-0.5"><span id="record-count">0</span> bikes tracked</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="relative">
+              <select id="status-filter"
+                class="appearance-none text-sm bg-slate-50 border border-slate-200 rounded-xl pl-3 pr-8 py-2 text-slate-600 outline-none focus:border-orange-400 cursor-pointer">
+                <option value="all">All Statuses</option>
+                <option value="ok">Up to Date</option>
+                <option value="due">Due Soon</option>
+                <option value="overdue">Overdue</option>
+              </select>
+              <span class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-xs">▾</span>
+            </div>
+            <div class="relative">
+              <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+              <input type="text" id="search-input" placeholder="Search plates or rider…"
+                class="pl-9 pr-4 py-2 text-sm bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100 w-52 transition-all"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="bg-slate-50 border-b border-slate-100">
+                <th class="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-6 py-3">#</th>
+                <th class="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-6 py-3">Bike Plates</th>
+                <th class="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-6 py-3">Rider</th>
+                <th class="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-6 py-3">Previous Service</th>
+                <th class="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-6 py-3">Next Service</th>
+                <th class="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-6 py-3">Status</th>
+                <th class="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-6 py-3">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="table-body" class="divide-y divide-slate-50"></tbody>
+          </table>
+
+          <div id="empty-state" class="flex flex-col items-center justify-center py-16 text-slate-300">
+            <svg class="w-12 h-12 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+            </svg>
+            <p class="text-sm font-medium text-slate-400">No bikes logged yet</p>
+            <p class="text-xs text-slate-300 mt-1">Add a bike above to start tracking maintenance</p>
+          </div>
+        </div>
+      </div>
+
     </div>
-  </body>
+  </main>
+
+  <!-- ===== UPDATE SERVICE MODAL ===== -->
+  <div id="update-overlay" class="hidden fixed inset-0 z-50 bg-slate-900/40 flex items-center justify-center">
+    <div id="update-modal" class="bg-white rounded-2xl shadow-2xl p-7 w-96 transform transition-all scale-95 opacity-0">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-10 h-10 bg-orange-50 rounded-xl flex items-center justify-center">
+          <svg class="w-5 h-5 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+          </svg>
+        </div>
+        <div>
+          <h3 class="font-bold text-slate-800">Update Service</h3>
+          <p class="text-xs text-slate-400" id="update-modal-subtitle">Bike: —</p>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        <div class="flex flex-col gap-1.5">
+          <label class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Service Done On</label>
+          <input type="date" id="update-prev-date"
+            class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-700 outline-none focus:border-orange-400 focus:ring-3 focus:ring-orange-100 transition-all"/>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <label class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Next Service Due</label>
+          <input type="date" id="update-next-date"
+            class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-700 outline-none focus:border-orange-400 focus:ring-3 focus:ring-orange-100 transition-all"/>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <label class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Service Notes <span class="text-slate-300 normal-case font-normal">(optional)</span></label>
+          <input type="text" id="update-notes" placeholder="e.g. Oil change, brake pads replaced…"
+            class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-700 placeholder-slate-300 outline-none focus:border-orange-400 focus:ring-3 focus:ring-orange-100 transition-all"/>
+        </div>
+      </div>
+
+      <div class="flex gap-3 mt-6">
+        <button id="update-cancel-btn" class="flex-1 py-2.5 rounded-xl border border-slate-200 text-slate-600 text-sm font-medium hover:bg-slate-50 transition-colors">Cancel</button>
+        <button id="update-confirm-btn" class="flex-1 py-2.5 rounded-xl bg-orange-500 text-white text-sm font-semibold hover:bg-orange-600 transition-colors">Save Update</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIGN-OUT MODAL -->
+  <div id="confirm-overlay" class="hidden fixed inset-0 z-50 bg-slate-900/40 flex items-center justify-center">
+    <div id="confirm-modal" class="bg-white rounded-2xl shadow-2xl p-7 w-80 text-center transform transition-all scale-95 opacity-0">
+      <div class="w-12 h-12 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-4">
+        <svg class="w-6 h-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+        </svg>
+      </div>
+      <h3 class="font-bold text-slate-800 mb-1">Sign out?</h3>
+      <p class="text-sm text-slate-400 mb-6">You'll be redirected to the login page.</p>
+      <div class="flex gap-3">
+        <button id="noBtn" class="flex-1 py-2.5 rounded-xl border border-slate-200 text-slate-600 text-sm font-medium hover:bg-slate-50 transition-colors">Cancel</button>
+        <a href="login.html" class="flex-1 py-2.5 rounded-xl bg-red-500 text-white text-sm font-semibold hover:bg-red-600 transition-colors text-center">Sign out</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 flex items-center gap-3 bg-slate-800 text-white text-sm font-medium px-5 py-3 rounded-xl shadow-xl translate-y-16 opacity-0 transition-all duration-300">
+    <svg class="w-4 h-4 text-green-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+    </svg>
+    <span id="toast-msg">Done!</span>
+  </div>
 
   <script>
-        const form = document.getElementById("maintainance");
-        const platesInput = document.getElementById("username");
-        const riderInput = document.getElementById("name");
-        const serviceInput = document.getElementById("date");
-        const nextServiceInput = document.getElementById("date");
-        const tableBody = document.getElementById("table-body");
-        const signoutInput = document.getElementById("signout");
-        const confirmInput = document.getElementById("confirm");
-        const yesInput = document.getElementById("yesBtn");
-        const noInput = document.getElementById("noBtn");
-        const homeInput = document.getElementById("home");
-
-        homeInput.addEventListener("click", (e) => {
-          e.preventDefault();
-          confirmInput.style.display = "block";
-          {
-            yesInput.addEventListener("click", (e) => {
-              e.preventDefault();
-              window.location.href = "index.html";
-            });
-            noInput.addEventListener("click", (e) => {
-              e.preventDefault();
-              confirmInput.style.display = "none";
-            });
+    // ── SIDEBAR IMPORT ──────────────────────────────────────────
+    fetch('sidebar.html')
+      .then(r => r.text())
+      .then(html => {
+        document.getElementById('sidebar-mount').innerHTML = html;
+        setTimeout(() => {
+          document.querySelectorAll('.sidebar-link').forEach(a => {
+            a.classList.remove('bg-blue-600','text-white','shadow-md','shadow-blue-600/30','font-semibold');
+            a.classList.add('text-slate-300');
+          });
+          const link = document.querySelector('a[href="maintainance.html"]');
+          if (link) {
+            link.classList.remove('text-slate-300');
+            link.classList.add('bg-blue-600','text-white','shadow-md','shadow-blue-600/30');
           }
+        }, 100);
+        document.getElementById('sidebar-toggle')?.addEventListener('click', () => {
+          document.getElementById('sidebar')?.classList.toggle('-translate-x-full');
         });
+      })
+      .catch(() => console.warn('sidebar.html not found — use a local server.'));
 
-        signoutInput.addEventListener("click", (e) => {
-          e.preventDefault();
-          confirmInput.style.display = "block";
+    // ── DOM REFS ────────────────────────────────────────────────
+    const form          = document.getElementById('maintenance-form');
+    const platesInput   = document.getElementById('plates');
+    const riderSelect   = document.getElementById('rider');
+    const prevInput     = document.getElementById('prev-service');
+    const nextInput     = document.getElementById('next-service');
+    const tableBody     = document.getElementById('table-body');
+    const emptyState    = document.getElementById('empty-state');
+    const recordCount   = document.getElementById('record-count');
+    const formError     = document.getElementById('form-error');
+    const searchInput   = document.getElementById('search-input');
+    const statusFilter  = document.getElementById('status-filter');
+    const noRidersMsg   = document.getElementById('no-riders-msg');
+
+    // Update modal
+    const updateOverlay     = document.getElementById('update-overlay');
+    const updateModal       = document.getElementById('update-modal');
+    const updateSubtitle    = document.getElementById('update-modal-subtitle');
+    const updatePrevDate    = document.getElementById('update-prev-date');
+    const updateNextDate    = document.getElementById('update-next-date');
+    const updateNotes       = document.getElementById('update-notes');
+    const updateCancelBtn   = document.getElementById('update-cancel-btn');
+    const updateConfirmBtn  = document.getElementById('update-confirm-btn');
+
+    // Sign-out modal
+    const overlay    = document.getElementById('confirm-overlay');
+    const modal      = document.getElementById('confirm-modal');
+    const signoutBtn = document.getElementById('signout-btn');
+    const noBtn      = document.getElementById('noBtn');
+
+    // Toast
+    const toast    = document.getElementById('toast');
+    const toastMsg = document.getElementById('toast-msg');
+
+    // Holds index of the record currently being updated
+    let updateTargetIndex = null;
+
+    // ── TOAST ───────────────────────────────────────────────────
+    function showToast(msg, isError = false) {
+      toastMsg.textContent = msg;
+      toast.classList.toggle('bg-red-600', isError);
+      toast.classList.toggle('bg-slate-800', !isError);
+      toast.classList.remove('translate-y-16','opacity-0');
+      toast.classList.add('translate-y-0','opacity-100');
+      setTimeout(() => {
+        toast.classList.add('translate-y-16','opacity-0');
+        toast.classList.remove('translate-y-0','opacity-100');
+      }, 3000);
+    }
+
+    // ── MODALS ──────────────────────────────────────────────────
+    function openModal(ovEl, modEl) {
+      ovEl.classList.remove('hidden');
+      requestAnimationFrame(() => {
+        modEl.classList.remove('scale-95','opacity-0');
+        modEl.classList.add('scale-100','opacity-100');
+      });
+    }
+    function closeModal(ovEl, modEl) {
+      modEl.classList.add('scale-95','opacity-0');
+      modEl.classList.remove('scale-100','opacity-100');
+      setTimeout(() => ovEl.classList.add('hidden'), 200);
+    }
+
+    signoutBtn.addEventListener('click', () => openModal(overlay, modal));
+    noBtn.addEventListener('click', () => closeModal(overlay, modal));
+    overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(overlay, modal); });
+
+    updateCancelBtn.addEventListener('click', () => closeModal(updateOverlay, updateModal));
+    updateOverlay.addEventListener('click', e => { if (e.target === updateOverlay) closeModal(updateOverlay, updateModal); });
+
+    // ── SERVICE STATUS ───────────────────────────────────────────
+    function getStatus(nextServiceStr) {
+      if (!nextServiceStr) return 'ok';
+      const next = new Date(nextServiceStr);
+      if (isNaN(next)) return 'ok';
+      const today = new Date(); today.setHours(0,0,0,0);
+      const diff = Math.ceil((next - today) / 86400000);
+      if (diff < 0)   return 'overdue';
+      if (diff <= 14) return 'due';
+      return 'ok';
+    }
+
+    function statusPill(status) {
+      const cfg = {
+        ok:      { label: 'Up to Date', cls: 'bg-emerald-50 text-emerald-600 border-emerald-200', dot: 'bg-emerald-500' },
+        due:     { label: 'Due Soon',   cls: 'bg-amber-50 text-amber-600 border-amber-200',       dot: 'bg-amber-400'  },
+        overdue: { label: 'Overdue',    cls: 'bg-red-50 text-red-600 border-red-200',             dot: 'bg-red-500'    },
+      };
+      const c = cfg[status] || cfg.ok;
+      return `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border ${c.cls}">
+        <span class="w-1.5 h-1.5 rounded-full ${c.dot}"></span>${c.label}
+      </span>`;
+    }
+
+    function fmtDate(d) {
+      if (!d) return 'N/A';
+      const dt = new Date(d + 'T00:00:00');
+      if (isNaN(dt)) return d;
+      return dt.toLocaleDateString('en-KE', { day: '2-digit', month: 'short', year: 'numeric' });
+    }
+
+    // ── STATS ────────────────────────────────────────────────────
+    function updateStats() {
+      const services = JSON.parse(localStorage.getItem('services')) || [];
+      const total   = services.length;
+      const overdue = services.filter(s => getStatus(s.nextService) === 'overdue').length;
+      const due     = services.filter(s => getStatus(s.nextService) === 'due').length;
+      const ok      = total - overdue - due;
+      document.getElementById('stat-total').textContent   = total;
+      document.getElementById('stat-ok').textContent      = ok;
+      document.getElementById('stat-due').textContent     = due;
+      document.getElementById('stat-overdue').textContent = overdue;
+      recordCount.textContent = total;
+    }
+
+    // ── POPULATE RIDER DROPDOWN ──────────────────────────────────
+    function populateRiders() {
+      const riders = JSON.parse(localStorage.getItem('riders')) || [];
+      while (riderSelect.options.length > 1) riderSelect.remove(1);
+      if (riders.length === 0) {
+        noRidersMsg.classList.remove('hidden');
+      } else {
+        noRidersMsg.classList.add('hidden');
+        riders.forEach(r => {
+          const opt = document.createElement('option');
+          opt.value = r.name;
+          opt.textContent = `${r.name} — ${r.category}`;
+          riderSelect.appendChild(opt);
         });
-
-        yesInput.addEventListener("click", (e) => {
-          e.preventDefault();
-          window.location.href = "login.html";
-        });
-
-        noInput.addEventListener("click", (e) => {
-          e.preventDefault();
-          confirmInput.style.display = "none";
-        });
-
-        // Load saved service entries on page load
-    window.addEventListener("DOMContentLoaded", () => {
-      const savedServices = JSON.parse(localStorage.getItem("services")) || [];
-      savedServices.forEach(service => addServiceRow(service));
-    });
-
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-
-      const plates = platesInput.value.trim();
-      const rider = riderInput.value.trim();
-      const service = serviceInput.value.trim();
-      const nextService = nextServiceInput.value.trim();
-
-      if (!plates || !rider || !service || !nextService) {
-        alert("Please fill in all the required fields");
-        return;
       }
+    }
+    window.addEventListener('focus', populateRiders);
 
-      const serviceEntry = { plates, rider, service, nextService };
-      addServiceRow(serviceEntry);
+    // ── RENDER ALL ROWS ──────────────────────────────────────────
+    function renderTable() {
+      const services = JSON.parse(localStorage.getItem('services')) || [];
+      tableBody.innerHTML = '';
+      const q  = (searchInput?.value || '').toLowerCase();
+      const sf = statusFilter?.value || 'all';
+      let shown = 0;
 
-      // Save to localStorage
-      const services = JSON.parse(localStorage.getItem("services")) || [];
-      services.push(serviceEntry);
-      localStorage.setItem("services", JSON.stringify(services));
+      services.forEach((s, idx) => {
+        const status = getStatus(s.nextService);
+        const matchText   = `${s.plates||''} ${s.rider||''}`.toLowerCase().includes(q);
+        const matchStatus = sf === 'all' || status === sf;
+        if (!matchText || !matchStatus) return;
+        shown++;
 
-      form.reset();
-    });
+        const avatarColors = ['bg-violet-100 text-violet-600','bg-blue-100 text-blue-600','bg-emerald-100 text-emerald-600','bg-orange-100 text-orange-600','bg-pink-100 text-pink-600'];
+        const avatarCls = avatarColors[idx % avatarColors.length];
+        const initials = (s.rider||'?').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
 
-    // Function for adding a row to the service table
-    function addServiceRow({ plates, rider, service, nextService }) {
-      const row = document.createElement("tr");
+        const plateCls = { ok:'bg-slate-100 text-slate-700', due:'bg-amber-50 text-amber-700', overdue:'bg-red-50 text-red-700' }[status];
+        const nextDateCls = { ok:'text-slate-700', due:'text-amber-600 font-semibold', overdue:'text-red-600 font-semibold' }[status];
 
-      const platesCell = document.createElement("td");
-      platesCell.textContent = plates;
-      platesCell.className = "text-gray-900 font-bold text-sm";
-      row.appendChild(platesCell);
+        const row = document.createElement('tr');
+        row.className = 'row-in hover:bg-slate-50 transition-colors';
+        row.innerHTML = `
+          <td class="px-6 py-4 text-slate-400 text-xs font-mono">${String(idx + 1).padStart(2,'0')}</td>
+          <td class="px-6 py-4">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl ${plateCls} text-sm font-bold tracking-widest font-mono">
+              ${s.plates || 'N/A'}
+            </span>
+          </td>
+          <td class="px-6 py-4">
+            <div class="flex items-center gap-2.5">
+              <div class="w-7 h-7 rounded-full ${avatarCls} flex items-center justify-center text-xs font-bold flex-shrink-0">${initials}</div>
+              <span class="font-semibold text-slate-700">${s.rider || 'N/A'}</span>
+            </div>
+          </td>
+          <td class="px-6 py-4 text-slate-500">${fmtDate(s.service)}</td>
+          <td class="px-6 py-4 ${nextDateCls}">${fmtDate(s.nextService)}</td>
+          <td class="px-6 py-4">${statusPill(status)}</td>
+          <td class="px-6 py-4">
+            <div class="flex items-center gap-2">
+              <button class="update-btn flex items-center gap-1.5 text-xs font-semibold text-orange-600 bg-orange-50 hover:bg-orange-100 border border-orange-200 px-3 py-1.5 rounded-lg transition-all" data-idx="${idx}">
+                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                </svg>
+                Update
+              </button>
+              <button class="delete-btn flex items-center gap-1.5 text-xs font-medium text-slate-400 hover:text-red-500 bg-slate-100 hover:bg-red-50 px-3 py-1.5 rounded-lg border border-slate-200 hover:border-red-200 transition-all" data-idx="${idx}">
+                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                </svg>
+                Remove
+              </button>
+            </div>
+          </td>
+        `;
 
-      const riderCell = document.createElement("td");
-      riderCell.textContent = rider;
-      riderCell.className = "text-gray-900 font-bold text-sm";
-      row.appendChild(riderCell);
+        // Update button
+        row.querySelector('.update-btn').addEventListener('click', () => {
+          updateTargetIndex = idx;
+          const services = JSON.parse(localStorage.getItem('services')) || [];
+          const entry = services[idx];
+          updateSubtitle.textContent = `Bike: ${entry.plates} · Rider: ${entry.rider}`;
+          updatePrevDate.value  = entry.service || '';
+          updateNextDate.value  = entry.nextService || '';
+          updateNotes.value     = entry.notes || '';
+          openModal(updateOverlay, updateModal);
+        });
 
-      const serviceCell = document.createElement("td");
-      serviceCell.textContent = service;
-      serviceCell.className = "text-gray-900 font-bold text-sm";
-      row.appendChild(serviceCell);
+        // Delete button
+        row.querySelector('.delete-btn').addEventListener('click', () => {
+          row.style.transition = 'opacity .25s, transform .25s';
+          row.style.opacity = '0';
+          row.style.transform = 'translateX(16px)';
+          setTimeout(() => {
+            const services = JSON.parse(localStorage.getItem('services')) || [];
+            services.splice(idx, 1);
+            localStorage.setItem('services', JSON.stringify(services));
+            renderTable();
+            updateStats();
+            showToast('Bike record removed.', true);
+          }, 250);
+        });
 
-      const nextServiceCell = document.createElement("td");
-      nextServiceCell.textContent = nextService;
-      nextServiceCell.className = "text-gray-900 font-bold text-sm";
-      row.appendChild(nextServiceCell);
-
-      const actionCell = document.createElement("td");
-      const deleteBtn = document.createElement("button");
-      deleteBtn.textContent = "Delete";
-      deleteBtn.className =
-        "bg-red-500 text-white px-2 py-1 rounded hover:bg-red-700";
-
-      deleteBtn.addEventListener("click", () => {
-        tableBody.removeChild(row);
-
-        // Remove from localStorage
-        const services = JSON.parse(localStorage.getItem("services")) || [];
-        const updatedServices = services.filter(
-          s => !(s.plates === plates && s.rider === rider && s.service === service && s.nextService === nextService)
-        );
-        localStorage.setItem("services", JSON.stringify(updatedServices));
+        tableBody.appendChild(row);
       });
 
-      actionCell.appendChild(deleteBtn);
-      row.appendChild(actionCell);
-
-      tableBody.appendChild(row);
+      emptyState.style.display = shown === 0 ? 'flex' : 'none';
     }
+
+    // ── UPDATE CONFIRM ───────────────────────────────────────────
+    updateConfirmBtn.addEventListener('click', () => {
+      const newPrev = updatePrevDate.value;
+      const newNext = updateNextDate.value;
+      if (!newPrev || !newNext) {
+        showToast('Please fill in both dates.', true);
+        return;
+      }
+      const services = JSON.parse(localStorage.getItem('services')) || [];
+      if (updateTargetIndex !== null && services[updateTargetIndex]) {
+        services[updateTargetIndex].service     = newPrev;
+        services[updateTargetIndex].nextService = newNext;
+        services[updateTargetIndex].notes       = updateNotes.value.trim();
+        localStorage.setItem('services', JSON.stringify(services));
+        closeModal(updateOverlay, updateModal);
+        renderTable();
+        updateStats();
+        showToast('Service record updated successfully!');
+        updateTargetIndex = null;
+      }
+    });
+
+    // ── FORM SUBMIT ──────────────────────────────────────────────
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const plates = platesInput.value.trim().toUpperCase();
+      const rider  = riderSelect.value;
+      const prev   = prevInput.value;
+      const next   = nextInput.value;
+
+      if (!plates || rider === 'select' || !prev || !next) {
+        formError.classList.remove('hidden');
+        return;
+      }
+      formError.classList.add('hidden');
+
+      const entry = { plates, rider, service: prev, nextService: next, notes: '' };
+      const services = JSON.parse(localStorage.getItem('services')) || [];
+      services.push(entry);
+      localStorage.setItem('services', JSON.stringify(services));
+      renderTable();
+      updateStats();
+      form.reset();
+      showToast(`${plates} added to maintenance schedule!`);
+    });
+
+    // ── FILTERS ──────────────────────────────────────────────────
+    searchInput?.addEventListener('input', renderTable);
+    statusFilter?.addEventListener('change', renderTable);
+
+    // ── INIT ─────────────────────────────────────────────────────
+    window.addEventListener('DOMContentLoaded', () => {
+      populateRiders();
+      renderTable();
+      updateStats();
+    });
   </script>
+</body>
 </html>

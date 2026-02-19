@@ -1,600 +1,590 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>Manager</title>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <title>Bike Expenses — FleetPulse</title>
   <style>
-    .mydash {
-      position: relative;
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    #sidebar-mount { display: contents; }
+    .fade-up {
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.5s ease forwards;
     }
-    .myheader {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      z-index: 10;
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    .row-in { animation: rowSlide 0.35s ease both; }
+    @keyframes rowSlide {
+      from { opacity: 0; transform: translateX(-12px); }
+      to   { opacity: 1; transform: translateX(0); }
     }
-    .myexpense {
-      margin-left: 260px;
-      width: 84%;
-      text-align: center;
-      background-color: rgb(0, 0, 156);
-      padding: 3em;
-      color: white;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1em;
-      box-sizing: border-box;
-      margin-top: 2%;
-    }
-    form {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 40px;
-    }
-    .inputs1 {
-      flex: 1 1 150px;
-      padding: 0.5em;
-      font-size: 1em;
-      border: none;
-      border-radius: 4px;
-      color: black;
-      box-sizing: border-box;
-    }
-    .inputs2 {
-      flex: 1 1 150px;
-      padding: 0.5em;
-      font-size: 1em;
-      border: none;
-      border-radius: 4px;
-      color: black;
-      box-sizing: border-box;
-    }
-    .inputs3 {
-      flex: 1 1 150px;
-      padding: 0.5em;
-      font-size: 1em;
-      border: none;
-      border-radius: 4px;
-      color: black;
-      box-sizing: border-box;
-    }
-    .inputs4 {
-      flex: 1 1 150px;
-      padding: 0.5em;
-      font-size: 1em;
-      border: none;
-      border-radius: 4px;
-      color: black;
-      box-sizing: border-box;
-    }
-    .inputs5 {
-      flex: 1 1 150px;
-      padding: 0.5em;
-      font-size: 1em;
-      border: none;
-      border-radius: 4px;
-      color: black;
-      box-sizing: border-box;
-    }
-    button {
-      text-align: center;
-      margin-top: 20px;
-      margin-bottom: 20px;
-    }
-    table {
-      width: 80%;
-      padding: -20px;
-      border-collapse: collapse;
-    }
-    .tables {
-      margin-left: 20%;
-      width: 80%;
-    }
-    .hd {
-      width: 10%;
-    }
-    tbody {
-      width: 100%;
-    }
-    th,
-    td {
-      padding: 20px 2px;
-      text-align: center;
-      border-bottom: 1px solid #ddd;
-      width: 50%;
-      margin: 0%;
-    }
-    p {
-      padding: 20px 2px;
-      text-align: center;
-      width: 50%;
-      margin: 0%;
-    }
-    .sign {
-      display: none;
-      position: fixed;
-      top: 40%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: white;
-      color: rgb(0, 0, 182);
-      border: 2px solid #333;
-      padding: 7px;
-      font-size: 25px;
-      text-align: center;
-      z-index: 1000;
-    }
-    .yess {
-      background-color: rgb(0, 0, 182);
-      color: white;
-      padding: 0.1em;
-      width: 50%;
-      text-align: center;
-      display: block;
-      border-color: black;
-      margin: auto;
-      border: 2px;
-      position: relative;
-      border-radius: 20px;
-      border: 1px solid gray;
-      box-shadow: 0 25px 45px rgb(5, 5, 115);
-      z-index: 10;
-    }
-    .noo {
-      background-color: rgb(0, 0, 182);
-      color: white;
-      padding: 0.1em;
-      width: 50%;
-      text-align: center;
-      display: block;
-      border-color: black;
-      margin: auto;
-      border: 2px;
-      position: relative;
-      border-radius: 20px;
-      border: 1px solid gray;
-      box-shadow: 0 25px 45px rgb(5, 5, 115);
-      z-index: 10;
-    }
-    .text {
-      display: flex;
-    }
+    select { background-image: none; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 99px; }
+    #confirm-overlay { backdrop-filter: blur(4px); }
   </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
 
-  <body>
-    <nav
-      class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700"
-    >
-      <div class="px-3 py-3 lg:px-5 lg:pl-3">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center justify-start rtl:justify-end">
-            <button
-              data-drawer-target="logo-sidebar"
-              data-drawer-toggle="logo-sidebar"
-              aria-controls="logo-sidebar"
-              type="button"
-              class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-            >
-              <span class="sr-only">Open sidebar</span>
-              <svg
-                class="w-6 h-6"
-                aria-hidden="true"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  clip-rule="evenodd"
-                  fill-rule="evenodd"
-                  d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
-                ></path>
-              </svg>
-            </button>
-            <a
-              class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
-            >
-              <div>
-                <img
-                  src="pulsefleet-logo.png"
-                  alt=""
-                  class="w-10 h-10 p-none rounded-full"
-                />
-              </div>
-              <span class="ml-3 text-xl text-gray-100"
-                >Fleet
-                <span class="text-blue-800 font-bold text-2xl"
-                  >Pulse</span
-                ></span
-              >
-            </a>
+  <!-- SIDEBAR -->
+  <div id="sidebar-mount"></div>
+
+  <!-- TOP NAV -->
+  <header class="fixed top-0 right-0 left-0 sm:left-64 z-30 h-16 bg-white border-b border-slate-100 flex items-center justify-between px-6 shadow-sm">
+    <button id="sidebar-toggle" class="sm:hidden p-2 rounded-lg hover:bg-slate-100 text-slate-500 transition-colors">
+      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+    <div class="flex items-center gap-2 text-sm">
+      <span class="text-slate-400">Fleet Manager</span>
+      <span class="text-slate-300">/</span>
+      <span class="font-semibold text-slate-800">Bike Expenses</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <button class="relative p-2 rounded-lg hover:bg-slate-100 text-slate-400 transition-colors">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+        </svg>
+        <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-blue-600 rounded-full"></span>
+      </button>
+      <button id="signout-btn"
+        class="flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-red-500 bg-slate-100 hover:bg-red-50 px-4 py-2 rounded-lg transition-all">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+        </svg>
+        Sign out
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="sm:ml-64 pt-16 min-h-screen">
+    <div class="p-6 md:p-8 max-w-6xl mx-auto">
+
+      <!-- Page header -->
+      <div class="mb-8 fade-up" style="animation-delay:.05s">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center shadow-md shadow-blue-500/25">
+            <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
           </div>
-          <nav
-            class="md:ml-auto flex flex-wrap items-center text-base justify-center"
-          >
-            <a
-              href="index.html"
-              id="home"
-              class="mr-5 p-2 rounded-2xl transition-transform duration-300 ease-in-out hover:-translate-y-2"
-              >Home</a
-            >
-            <a
-              href="manager.html"
-              class="mr-5 p-2 rounded-2xl duration-300 ease-in-out hover:-translate-y-2 text-gray-100 bg-blue-700"
-              >Fleet manager</a
-            >
-            <!-- <a href="login.html"
-              class="mr-5 rounded-2xl transition-transform duration-300 ease-in-out hover:-translate-y-2"
-              >Sign-out</a
-            > -->
-            <a href="login.html">
-              <button
-                id="signout"
-                class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0"
-              >
-                Sign-out
-                <svg
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  class="w-4 h-4 ml-1"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M5 12h14M12 5l7 7-7 7"></path>
-                </svg>
-              </button>
-            </a>
-          </nav>
+          <div>
+            <h1 class="text-xl font-bold text-slate-800">Bike Expenses</h1>
+            <p class="text-sm text-slate-400">Track fuel, service, repair and other bike costs</p>
+          </div>
         </div>
       </div>
-    </nav>
-    <div id="confirm" class="sign">
-      <p class="text">Are you sure you want to sign out?</p>
-      <button id="yesBtn" class="yess">Yes</button><br />
-      <button id="noBtn" class="noo">No</button>
-    </div>
 
-    <aside
-      id="logo-sidebar"
-      class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
-      aria-label="Sidebar"
-    >
-      <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
-        <ul class="space-y-2 font-medium">
-          <li>
-            <a
-              href="dashboard.html"
-              class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-            >
-              <svg
-                class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 22 21"
-              >
-                <path
-                  d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z"
-                />
-                <path
-                  d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z"
-                />
+      <!-- STATS ROW -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6 fade-up" style="animation-delay:.08s">
+
+        <!-- Total spend — blue/black hero card -->
+        <div class="col-span-2 sm:col-span-1 bg-blue-600 rounded-2xl px-5 py-4 shadow-md shadow-blue-500/20 relative overflow-hidden">
+          <div class="absolute -right-4 -top-4 w-24 h-24 bg-white/10 rounded-full"></div>
+          <p class="text-xs font-semibold text-blue-100 uppercase tracking-wide mb-1">Total Spent</p>
+          <p class="text-2xl font-bold text-white" id="stat-total">KES 0</p>
+          <p class="text-xs text-blue-200 mt-1">this month</p>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm px-5 py-4">
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">Fuel</p>
+          <p class="text-2xl font-bold text-slate-800" id="stat-fuel">KES 0</p>
+        </div>
+        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm px-5 py-4">
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">Service</p>
+          <p class="text-2xl font-bold text-slate-800" id="stat-service">KES 0</p>
+        </div>
+        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm px-5 py-4">
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">Repairs</p>
+          <p class="text-2xl font-bold text-slate-800" id="stat-repair">KES 0</p>
+        </div>
+      </div>
+
+      <!-- Monthly budget alert bar -->
+      <div id="budget-bar-wrap" class="mb-6 bg-white border border-slate-100 rounded-2xl px-5 py-4 shadow-sm fade-up" style="animation-delay:.1s">
+        <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
+          <div class="flex items-center gap-2">
+            <span class="text-sm font-semibold text-slate-700">Monthly Budget</span>
+            <span id="budget-pct-label" class="text-xs font-semibold text-blue-600 bg-blue-50 border border-blue-100 px-2 py-0.5 rounded-full">0%</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs text-slate-400">Limit:</span>
+            <input type="number" id="budget-limit" value="10000" min="1000"
+              class="w-24 text-sm font-semibold bg-slate-50 border border-slate-200 rounded-lg px-3 py-1 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all text-slate-800"/>
+            <span class="text-xs text-slate-400">KES</span>
+          </div>
+        </div>
+        <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
+          <div id="budget-bar" class="h-full rounded-full transition-all duration-700 bg-blue-600" style="width:0%"></div>
+        </div>
+        <p id="budget-warning" class="hidden mt-2 text-xs font-semibold text-red-600 bg-red-50 border border-red-200 rounded-xl px-3 py-2">
+          ⚠ You have reached or exceeded your monthly budget limit!
+        </p>
+      </div>
+
+      <!-- FORM CARD -->
+      <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 md:p-8 mb-6 fade-up" style="animation-delay:.12s">
+        <h2 class="text-sm font-semibold text-slate-500 uppercase tracking-widest mb-5 flex items-center gap-2">
+          <span class="w-5 h-px bg-slate-200"></span>
+          Log New Expense
+          <span class="flex-1 h-px bg-slate-100"></span>
+        </h2>
+
+        <form id="expense-form" autocomplete="off">
+          <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4 mb-5">
+
+            <!-- Bike plates -->
+            <div class="flex flex-col gap-1.5">
+              <label class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Bike Plates</label>
+              <input type="text" id="plates" placeholder="e.g. KMFB 571K"
+                class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-800 placeholder-slate-300 outline-none focus:border-blue-500 focus:ring-3 focus:ring-blue-100 transition-all font-mono tracking-wider uppercase"/>
+            </div>
+
+            <!-- Rider — from localStorage -->
+            <div class="flex flex-col gap-1.5">
+              <label class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Rider</label>
+              <div class="relative">
+                <select id="rider"
+                  class="w-full appearance-none bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-700 outline-none focus:border-blue-500 focus:ring-3 focus:ring-blue-100 transition-all cursor-pointer pr-9">
+                  <option value="select">— Select Rider —</option>
+                </select>
+                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-xs">▾</span>
+              </div>
+              <p id="no-riders-msg" class="hidden text-xs text-amber-600 bg-amber-50 border border-amber-200 rounded-xl px-3 py-2">
+                ⚠ No riders. <a href="add.html" class="underline font-semibold">Add riders →</a>
+              </p>
+            </div>
+
+            <!-- Expense type -->
+            <div class="flex flex-col gap-1.5">
+              <label class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Expense Type</label>
+              <div class="relative">
+                <select id="expense-type"
+                  class="w-full appearance-none bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-700 outline-none focus:border-blue-500 focus:ring-3 focus:ring-blue-100 transition-all cursor-pointer pr-9">
+                  <option value="select">— Select Type —</option>
+                  <option value="Fuel">Fuel</option>
+                  <option value="Service">Service</option>
+                  <option value="Car wash">Car Wash</option>
+                  <option value="Repair">Repair</option>
+                  <option value="Other">Other</option>
+                </select>
+                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-xs">▾</span>
+              </div>
+            </div>
+
+            <!-- Date -->
+            <div class="flex flex-col gap-1.5">
+              <label class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Date</label>
+              <input type="date" id="date"
+                class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-700 outline-none focus:border-blue-500 focus:ring-3 focus:ring-blue-100 transition-all"/>
+            </div>
+
+            <!-- Amount -->
+            <div class="flex flex-col gap-1.5">
+              <label class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Amount (KES)</label>
+              <input type="number" id="amount" placeholder="0.00" min="0" step="0.01"
+                class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-800 placeholder-slate-300 outline-none focus:border-blue-500 focus:ring-3 focus:ring-blue-100 transition-all"/>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between flex-wrap gap-3">
+            <p id="form-error" class="text-sm text-red-500 hidden">⚠ Please fill in all fields correctly.</p>
+            <button type="submit"
+              class="ml-auto flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-6 py-2.5 rounded-xl shadow-md shadow-blue-500/25 hover:shadow-blue-500/40 transition-all active:scale-95">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
               </svg>
-              <span class="ms-3">Dashboard</span>
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="add.html"
-              class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-            >
-              <div class="w-5 h-5"><img src="plus.png" alt="" /></div>
-              <span class="flex-1 ms-3 whitespace-nowrap">Add rider</span>
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="assign.html"
-              class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-            >
-              <div class="w-5 h-5"><img src="delivery-man.png" alt="" /></div>
-              <span class="flex-1 ms-3 whitespace-nowrap">Assign delivery</span>
-              <span
-                class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300"
-                >3</span
-              >
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="report.html"
-              class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-            >
-              <div class="w-5 h-5"><img src="data-analytics.png" alt="" /></div>
-              <span class="flex-1 ms-3 whitespace-nowrap">Generate report</span>
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="#"
-              class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-            >
-              <div class="w-5 h-5"><img src="track.png" alt="" /></div>
-              <span class="flex-1 ms-3 whitespace-nowrap">Track rider</span>
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="expense.html"
-              class="flex items-center p-2 text-gray-100 rounded-lg dark:text-white bg-blue-700 group"
-            >
-              <div class="w-5 h-5"><img src="cash-flow.png" alt="" /></div>
-              <span class="flex-1 ms-3 whitespace-nowrap"
-                >Expense from bikes</span
-              >
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="maintainance.html"
-              class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-            >
-              <div class="w-5 h-5"><img src="tools.png" alt="" /></div>
-              <span class="flex-1 ms-3 whitespace-nowrap"
-                >Scheduled maintenance</span
-              >
-            </a>
-          </li>
-        </ul>
+              Add Expense
+            </button>
+          </div>
+        </form>
       </div>
-    </aside>
-    <br /><br /><br />
 
-    <div class="myexpense">
-      <form action="" id="expenses">
-        <div class="input1">
-          <label for="plates">Bike plates</label><br />
-          <input
-            type="text"
-            id="username"
-            name="username"
-            placeholder="KMFB 571K"
-            class="text-gray-900 h-10 rounded-lg"
-          /><br /><br />
-        </div>
-        <div class="input2">
-          <label for="name">Riders name</label><br />
-          <input
-            type="text"
-            id="name"
-            name="name"
-            placeholder="John Doe"
-            class="text-gray-900 h-10 rounded-lg"
-          /><br /><br />
-        </div>
-        <div class="input3">
-          <label for="expense" class="headings">Expense</label><br />
-          <select name="expense" id="expense" class="text-gray-900 h-10 rounded-lg">
-            <option value="select" class="text-gray-900">Select</option>
-            <option value="fuel" class="text-gray-900">Fuel</option>
-            <option value="Service" class="text-gray-900">Service</option>
-            <option value="carwash" class="text-gray-900">Car wash</option>
-            <option value="repair" class="text-gray-900">Repair</option>
-          </select>
-        </div>
-        <div class="input4">
-          <label for="date">Date</label><br />
-          <input type="date" id="date" name="date" class="text-gray-900 h-10 rounded-lg" />
-        </div>
-        <div class="input5">
-          <label for="amount">Amount</label><br />
-          <input type="text" id="amount" name="amount" class="text-gray-900 h-10 rounded-lg" />
-        </div>
-        <div class="inputs6" class="headings">
-          <button
-            type="submit"
-            class="bg-sky-500 hover:bg-sky-800 hover:text-white p-2 py-2 mb-4 text-center"
-            id="button"
-          >
-            Add expense
-          </button>
-        </div>
-      </form>
-    </div>
-    <br /><br />
+      <!-- TABLE CARD -->
+      <div class="bg-white rounded-2xl border border-slate-100 shadow-sm fade-up" style="animation-delay:.16s">
 
-    <div class="tables">
-      <table>
-        <thead>
-          <tr>
-            <th class="hd">Bike plates</th>
-            <th class="hd">Rider</th>
-            <th class="hd">Expense</th>
-            <th class="hd">Date</th>
-            <th class="hd">Amount</th>
-          </tr>
-        </thead>
-        <tbody id="table-body" class="mybody"></tbody>
-      </table>
+        <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100 flex-wrap gap-3">
+          <div>
+            <h2 class="font-bold text-slate-800">Expense Log</h2>
+            <p class="text-xs text-slate-400 mt-0.5"><span id="record-count">0</span> entries</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <!-- Type filter -->
+            <div class="relative hidden sm:block">
+              <select id="type-filter"
+                class="appearance-none text-sm bg-slate-50 border border-slate-200 rounded-xl pl-3 pr-8 py-2 text-slate-600 outline-none focus:border-blue-400 cursor-pointer">
+                <option value="all">All Types</option>
+                <option value="Fuel">Fuel</option>
+                <option value="Service">Service</option>
+                <option value="Car wash">Car Wash</option>
+                <option value="Repair">Repair</option>
+                <option value="Other">Other</option>
+              </select>
+              <span class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-xs">▾</span>
+            </div>
+            <!-- Search -->
+            <div class="relative hidden sm:block">
+              <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+              <input type="text" id="search-input" placeholder="Search plates or rider…"
+                class="pl-9 pr-4 py-2 text-sm bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 w-52 transition-all"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="bg-slate-50 border-b border-slate-100">
+                <th class="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-6 py-3">#</th>
+                <th class="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-6 py-3">Bike Plates</th>
+                <th class="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-6 py-3">Rider</th>
+                <th class="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-6 py-3">Type</th>
+                <th class="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-6 py-3">Date</th>
+                <th class="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-6 py-3">Amount</th>
+                <th class="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-6 py-3">Action</th>
+              </tr>
+            </thead>
+            <tbody id="table-body" class="divide-y divide-slate-50"></tbody>
+          </table>
+
+          <div id="empty-state" class="flex flex-col items-center justify-center py-16 text-slate-300">
+            <svg class="w-12 h-12 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <p class="text-sm font-medium text-slate-400">No expenses logged yet</p>
+            <p class="text-xs text-slate-300 mt-1">Add an expense above to start tracking</p>
+          </div>
+        </div>
+
+        <!-- Table footer total -->
+        <div id="table-footer" class="hidden border-t border-slate-100 px-6 py-4 flex items-center justify-between flex-wrap gap-2">
+          <span class="text-sm text-slate-400"><span id="footer-count">0</span> entries shown</span>
+          <div class="flex items-center gap-2">
+            <span class="text-sm text-slate-500">Filtered total:</span>
+            <span class="text-base font-bold text-blue-600" id="footer-total">KES 0.00</span>
+          </div>
+        </div>
+      </div>
+
     </div>
-    <p id="balance-display" class="text-xl font-bold mt-4">
-      Total <span class="text-blue-700">Expense</span>: KES 0.00
-    </p>
-  </body>
+  </main>
+
+  <!-- SIGN-OUT MODAL -->
+  <div id="confirm-overlay" class="hidden fixed inset-0 z-50 bg-slate-900/40 flex items-center justify-center">
+    <div id="confirm-modal" class="bg-white rounded-2xl shadow-2xl p-7 w-80 text-center transform transition-all scale-95 opacity-0">
+      <div class="w-12 h-12 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-4">
+        <svg class="w-6 h-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+        </svg>
+      </div>
+      <h3 class="font-bold text-slate-800 mb-1">Sign out?</h3>
+      <p class="text-sm text-slate-400 mb-6">You'll be redirected to the login page.</p>
+      <div class="flex gap-3">
+        <button id="noBtn" class="flex-1 py-2.5 rounded-xl border border-slate-200 text-slate-600 text-sm font-medium hover:bg-slate-50 transition-colors">Cancel</button>
+        <a href="login.html" class="flex-1 py-2.5 rounded-xl bg-red-500 text-white text-sm font-semibold hover:bg-red-600 transition-colors text-center">Sign out</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 flex items-center gap-3 bg-slate-900 text-white text-sm font-medium px-5 py-3 rounded-xl shadow-xl translate-y-16 opacity-0 transition-all duration-300">
+    <svg class="w-4 h-4 text-blue-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+    </svg>
+    <span id="toast-msg">Done!</span>
+  </div>
 
   <script>
-    const form = document.getElementById("expenses");
-    const platesInput = document.getElementById("username");
-    const riderInput = document.getElementById("name");
-    const expenseInput = document.getElementById("expense");
-    const dateInput = document.getElementById("date");
-    const amountInput = document.getElementById("amount");
-    const tableBody = document.getElementById("table-body");
-    const balanceDisplay = document.getElementById("balance-display");
-    const signoutInput = document.getElementById("signout");
-    const confirmInput = document.getElementById("confirm");
-    const yesInput = document.getElementById("yesBtn");
-    const noInput = document.getElementById("noBtn");
-    const homeInput = document.getElementById("home");
-
-    homeInput.addEventListener("click", (e) => {
-      e.preventDefault();
-      confirmInput.style.display = "block";
-      {
-        yesInput.addEventListener("click", (e) => {
-          e.preventDefault();
-          window.location.href = "index.html";
+    // ── SIDEBAR IMPORT ──────────────────────────────────────────
+    fetch('sidebar.html')
+      .then(r => r.text())
+      .then(html => {
+        document.getElementById('sidebar-mount').innerHTML = html;
+        setTimeout(() => {
+          document.querySelectorAll('.sidebar-link').forEach(a => {
+            a.classList.remove('bg-blue-600','text-white','shadow-md','shadow-blue-600/30','font-semibold');
+            a.classList.add('text-slate-300');
+          });
+          const link = document.querySelector('a[href="expense.html"]');
+          if (link) {
+            link.classList.remove('text-slate-300');
+            link.classList.add('bg-blue-600','text-white','shadow-md','shadow-blue-600/30');
+          }
+        }, 100);
+        document.getElementById('sidebar-toggle')?.addEventListener('click', () => {
+          document.getElementById('sidebar')?.classList.toggle('-translate-x-full');
         });
-        noInput.addEventListener("click", (e) => {
-          e.preventDefault();
-          confirmInput.style.display = "none";
+      })
+      .catch(() => console.warn('sidebar.html not found — use a local server.'));
+
+    // ── DOM REFS ────────────────────────────────────────────────
+    const form        = document.getElementById('expense-form');
+    const platesInput = document.getElementById('plates');
+    const riderSelect = document.getElementById('rider');
+    const typeSelect  = document.getElementById('expense-type');
+    const dateInput   = document.getElementById('date');
+    const amountInput = document.getElementById('amount');
+    const tableBody   = document.getElementById('table-body');
+    const emptyState  = document.getElementById('empty-state');
+    const recordCount = document.getElementById('record-count');
+    const formError   = document.getElementById('form-error');
+    const searchInput = document.getElementById('search-input');
+    const typeFilter  = document.getElementById('type-filter');
+    const noRidersMsg = document.getElementById('no-riders-msg');
+    const budgetInput = document.getElementById('budget-limit');
+    const budgetBar   = document.getElementById('budget-bar');
+    const budgetPctLbl= document.getElementById('budget-pct-label');
+    const budgetWarn  = document.getElementById('budget-warning');
+    const tableFooter = document.getElementById('table-footer');
+    const footerCount = document.getElementById('footer-count');
+    const footerTotal = document.getElementById('footer-total');
+    const overlay     = document.getElementById('confirm-overlay');
+    const modal       = document.getElementById('confirm-modal');
+    const signoutBtn  = document.getElementById('signout-btn');
+    const noBtn       = document.getElementById('noBtn');
+    const toast       = document.getElementById('toast');
+    const toastMsg    = document.getElementById('toast-msg');
+
+    // ── TOAST ───────────────────────────────────────────────────
+    function showToast(msg, isError = false) {
+      toastMsg.textContent = msg;
+      toast.classList.toggle('bg-red-700', isError);
+      toast.classList.toggle('bg-slate-900', !isError);
+      toast.classList.remove('translate-y-16','opacity-0');
+      toast.classList.add('translate-y-0','opacity-100');
+      setTimeout(() => {
+        toast.classList.add('translate-y-16','opacity-0');
+        toast.classList.remove('translate-y-0','opacity-100');
+      }, 3000);
+    }
+
+    // ── MODAL ───────────────────────────────────────────────────
+    function openModal() {
+      overlay.classList.remove('hidden');
+      requestAnimationFrame(() => {
+        modal.classList.remove('scale-95','opacity-0');
+        modal.classList.add('scale-100','opacity-100');
+      });
+    }
+    function closeModal() {
+      modal.classList.add('scale-95','opacity-0');
+      modal.classList.remove('scale-100','opacity-100');
+      setTimeout(() => overlay.classList.add('hidden'), 200);
+    }
+    signoutBtn.addEventListener('click', openModal);
+    noBtn.addEventListener('click', closeModal);
+    overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+
+    // ── FORMAT ──────────────────────────────────────────────────
+    function fmt(n) {
+      return 'KES ' + Number(n).toLocaleString('en-KE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+    function fmtDate(d) {
+      if (!d) return 'N/A';
+      const dt = new Date(d + 'T00:00:00');
+      if (isNaN(dt)) return d;
+      return dt.toLocaleDateString('en-KE', { day: '2-digit', month: 'short', year: 'numeric' });
+    }
+
+    // ── EXPENSE TYPE PILL ───────────────────────────────────────
+    function typePill(type) {
+      const cfg = {
+        'Fuel':     'bg-blue-50 text-blue-700 border-blue-200',
+        'Service':  'bg-slate-100 text-slate-700 border-slate-200',
+        'Car wash': 'bg-sky-50 text-sky-700 border-sky-200',
+        'Repair':   'bg-black/5 text-slate-800 border-slate-300',
+        'Other':    'bg-slate-50 text-slate-500 border-slate-200',
+      };
+      const cls = cfg[type] || cfg['Other'];
+      return `<span class="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-semibold border ${cls}">${type}</span>`;
+    }
+
+    // ── POPULATE RIDER DROPDOWN ──────────────────────────────────
+    function populateRiders() {
+      const riders = JSON.parse(localStorage.getItem('riders')) || [];
+      while (riderSelect.options.length > 1) riderSelect.remove(1);
+      if (riders.length === 0) {
+        noRidersMsg.classList.remove('hidden');
+      } else {
+        noRidersMsg.classList.add('hidden');
+        riders.forEach(r => {
+          const opt = document.createElement('option');
+          opt.value = r.name;
+          opt.textContent = `${r.name} — ${r.category}`;
+          riderSelect.appendChild(opt);
         });
       }
-    });
+    }
+    window.addEventListener('focus', populateRiders);
 
-    signoutInput.addEventListener("click", (e) => {
-      e.preventDefault();
-      confirmInput.style.display = "block";
-    });
+    // ── STATS & BUDGET ───────────────────────────────────────────
+    function updateStats() {
+      const expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+      const total   = expenses.reduce((s, e) => s + Number(e.amount), 0);
+      const fuel    = expenses.filter(e => e.expenseType === 'Fuel').reduce((s,e) => s + Number(e.amount), 0);
+      const service = expenses.filter(e => e.expenseType === 'Service').reduce((s,e) => s + Number(e.amount), 0);
+      const repair  = expenses.filter(e => e.expenseType === 'Repair').reduce((s,e) => s + Number(e.amount), 0);
 
-    yesInput.addEventListener("click", (e) => {
-      e.preventDefault();
-      window.location.href = "login.html";
-    });
+      document.getElementById('stat-total').textContent   = fmt(total);
+      document.getElementById('stat-fuel').textContent    = fmt(fuel);
+      document.getElementById('stat-service').textContent = fmt(service);
+      document.getElementById('stat-repair').textContent  = fmt(repair);
 
-    noInput.addEventListener("click", (e) => {
-      e.preventDefault();
-      confirmInput.style.display = "none";
-    });
+      // Budget bar
+      const limit = Number(budgetInput.value) || 10000;
+      const pct   = Math.min((total / limit) * 100, 100);
+      budgetBar.style.width = pct + '%';
+      budgetPctLbl.textContent = Math.round((total / limit) * 100) + '%';
 
-    let totalBalance = 0;
+      if (pct >= 100) {
+        budgetBar.classList.replace('bg-blue-600','bg-red-500');
+        budgetWarn.classList.remove('hidden');
+      } else if (pct >= 75) {
+        budgetBar.classList.replace('bg-blue-600','bg-amber-400');
+        budgetWarn.classList.add('hidden');
+      } else {
+        budgetBar.classList.remove('bg-red-500','bg-amber-400');
+        budgetBar.classList.add('bg-blue-600');
+        budgetWarn.classList.add('hidden');
+      }
+    }
+    budgetInput.addEventListener('input', updateStats);
 
-    // Load expenses on page load
-    window.addEventListener("DOMContentLoaded", () => {
-      const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
-      expenses.forEach((expense) => {
-        addExpenseToTable(expense);
-        totalBalance += expense.amount;
+    // ── RENDER TABLE ─────────────────────────────────────────────
+    function renderTable() {
+      const expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+      const q   = (searchInput?.value || '').toLowerCase();
+      const tf  = typeFilter?.value || 'all';
+      tableBody.innerHTML = '';
+
+      const filtered = expenses.filter((e, idx) => {
+        const matchText = `${e.plates||''} ${e.rider||''}`.toLowerCase().includes(q);
+        const matchType = tf === 'all' || e.expenseType === tf;
+        return matchText && matchType;
       });
-      updateBalance();
-    });
 
-    // Handle form submission
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-
-      const plates = platesInput.value.trim();
-      const rider = riderInput.value.trim();
-      const expenseType = expenseInput.value.trim();
-      const date = dateInput.value.trim();
-      const amount = Number(amountInput.value.trim());
-
-      if (
-        !plates ||
-        !rider ||
-        expenseType === "select" ||
-        !date ||
-        isNaN(amount)
-      ) {
-        alert("Please fill all the inputs");
+      if (filtered.length === 0) {
+        emptyState.style.display = 'flex';
+        tableFooter.classList.add('hidden');
+        recordCount.textContent = expenses.length;
         return;
       }
 
-      const newExpense = { plates, rider, expenseType, date, amount };
+      emptyState.style.display = 'none';
+      tableFooter.classList.remove('hidden');
+      recordCount.textContent = expenses.length;
 
-      const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
-      expenses.push(newExpense);
-      localStorage.setItem("expenses", JSON.stringify(expenses));
+      const avatarColors = [
+        'bg-blue-100 text-blue-700',
+        'bg-slate-100 text-slate-700',
+        'bg-sky-100 text-sky-700',
+        'bg-indigo-100 text-indigo-700',
+        'bg-violet-100 text-violet-700',
+      ];
 
-      addExpenseToTable(newExpense);
-
-      totalBalance += amount;
-      updateBalance();
-
-      form.reset();
-    });
-
-    //update balance display
-    function updateBalance() {
-      const balanceDisplay = document.getElementById("balanceDisplay");
-      if (balanceDisplay) {
-        balanceDisplay.textContent = `Total: ${totalBalance}`;
-      }
-    }
-
-    //adding expense row to table
-    function addExpenseToTable({ plates, rider, expense, date, amount }) {
-      const row = document.createElement("tr");
-
-      const platesCell = document.createElement("td");
-      platesCell.textContent = plates;
-      platesCell.className = "text-gray-900 font-bold text-sm";
-      row.appendChild(platesCell);
-
-      const riderCell = document.createElement("td");
-      riderCell.textContent = rider;
-      riderCell.className = "text-gray-900 font-bold text-sm";
-      row.appendChild(riderCell);
-
-      const expenseCell = document.createElement("td");
-      expenseCell.textContent = expense;
-      expenseCell.className = "text-gray-900 font-bold text-sm";
-      row.appendChild(expenseCell);
-
-      const dateCell = document.createElement("td");
-      dateCell.textContent = date;
-      dateCell.className = "text-gray-900 font-bold text-sm";
-      row.appendChild(dateCell);
-
-      const amountCell = document.createElement("td");
-      amountCell.textContent = amount;
-      amountCell.className = "text-red-600 font-bold text-sm";
-      row.appendChild(amountCell);
-
-      const actionCell = document.createElement("td");
-      const deleteBtn = document.createElement("button");
-      deleteBtn.textContent = "Delete";
-      deleteBtn.className =
-        "bg-red-500 text-white px-2 py-1 rounded hover:bg-red-700";
-
-      deleteBtn.addEventListener("click", () => {
-        row.remove();
-        totalBalance -= amount;
-        updateBalance();
-
-        let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
-        expenses = expenses.filter(
-          (exp) =>
-            !(
-              exp.plates === plates &&
-              exp.rider === rider &&
-              exp.expense === expense &&
-              exp.date === date &&
-              exp.amount === amount
-            )
+      let filteredTotal = 0;
+      filtered.forEach((e, i) => {
+        const globalIdx = expenses.findIndex(ex =>
+          ex.plates === e.plates && ex.rider === e.rider &&
+          ex.expenseType === e.expenseType && ex.date === e.date && ex.amount === e.amount
         );
-        localStorage.setItem("expenses", JSON.stringify(expenses));
+        filteredTotal += Number(e.amount);
+
+        const initials = (e.rider||'?').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+        const avatarCls = avatarColors[i % avatarColors.length];
+
+        const row = document.createElement('tr');
+        row.className = 'row-in hover:bg-slate-50 transition-colors';
+
+        row.innerHTML = `
+          <td class="px-6 py-4 text-slate-400 text-xs font-mono">${String(i+1).padStart(2,'0')}</td>
+          <td class="px-6 py-4">
+            <span class="font-bold text-slate-800 font-mono tracking-wider text-sm bg-slate-100 px-2.5 py-1 rounded-lg">${e.plates || 'N/A'}</span>
+          </td>
+          <td class="px-6 py-4">
+            <div class="flex items-center gap-2.5">
+              <div class="w-7 h-7 rounded-full ${avatarCls} flex items-center justify-center text-xs font-bold flex-shrink-0">${initials}</div>
+              <span class="font-semibold text-slate-700">${e.rider || 'N/A'}</span>
+            </div>
+          </td>
+          <td class="px-6 py-4">${typePill(e.expenseType)}</td>
+          <td class="px-6 py-4 text-slate-500">${fmtDate(e.date)}</td>
+          <td class="px-6 py-4 font-bold text-slate-900">${fmt(e.amount)}</td>
+          <td class="px-6 py-4">
+            <button class="delete-btn flex items-center gap-1.5 text-xs font-medium text-slate-400 hover:text-red-500 bg-slate-100 hover:bg-red-50 px-3 py-1.5 rounded-lg border border-slate-200 hover:border-red-200 transition-all" data-idx="${globalIdx}">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+              </svg>
+              Remove
+            </button>
+          </td>
+        `;
+
+        row.querySelector('.delete-btn').addEventListener('click', function() {
+          const idx = parseInt(this.dataset.idx);
+          row.style.transition = 'opacity .25s, transform .25s';
+          row.style.opacity = '0';
+          row.style.transform = 'translateX(16px)';
+          setTimeout(() => {
+            const exps = JSON.parse(localStorage.getItem('expenses')) || [];
+            exps.splice(idx, 1);
+            localStorage.setItem('expenses', JSON.stringify(exps));
+            renderTable();
+            updateStats();
+            showToast('Expense removed.', true);
+          }, 250);
+        });
+
+        tableBody.appendChild(row);
       });
 
-      actionCell.appendChild(deleteBtn);
-      row.appendChild(actionCell);
-
-      tableBody.appendChild(row);
-
-      if (totalBalance >= 10000) {
-        alert("You have reached your maximum spend for the month");
-      }
+      footerCount.textContent = filtered.length;
+      footerTotal.textContent = fmt(filteredTotal);
     }
+
+    // ── FORM SUBMIT ──────────────────────────────────────────────
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const plates      = platesInput.value.trim().toUpperCase();
+      const rider       = riderSelect.value;
+      const expenseType = typeSelect.value;
+      const date        = dateInput.value;
+      const amount      = parseFloat(amountInput.value);
+
+      if (!plates || rider === 'select' || expenseType === 'select' || !date || isNaN(amount) || amount <= 0) {
+        formError.classList.remove('hidden');
+        return;
+      }
+      formError.classList.add('hidden');
+
+      const newExpense = { plates, rider, expenseType, date, amount };
+      const expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+      expenses.push(newExpense);
+      localStorage.setItem('expenses', JSON.stringify(expenses));
+
+      renderTable();
+      updateStats();
+      form.reset();
+      showToast(`${expenseType} expense of ${fmt(amount)} logged!`);
+    });
+
+    // ── FILTERS ──────────────────────────────────────────────────
+    searchInput?.addEventListener('input', renderTable);
+    typeFilter?.addEventListener('change', renderTable);
+
+    // ── INIT ─────────────────────────────────────────────────────
+    window.addEventListener('DOMContentLoaded', () => {
+      populateRiders();
+      renderTable();
+      updateStats();
+    });
   </script>
+</body>
 </html>
